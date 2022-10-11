@@ -7,6 +7,15 @@ s = "" # test git add
 
 @app.get("/items/")
 async def read_item(skip: int = 0, limit: int = 10):
+    """_summary_
+
+    Args:
+        skip (int, optional): _description_. Defaults to 0.
+        limit (int, optional): _description_. Defaults to 10.
+
+    Returns:
+        _type_: _description_
+    """
     return fake_items_db[skip : skip + limit]
 
 # @app.get("/items/{item_id}")
