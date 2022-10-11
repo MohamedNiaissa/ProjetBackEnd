@@ -1,0 +1,11 @@
+# ENVIRONNEMENTS
+.virtualenvs
+dev.env
+prod.env
+.env
+
+.idea
+.vscode
+.DS_STORE
+
+test.py
