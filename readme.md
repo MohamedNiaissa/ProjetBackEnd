@@ -9,19 +9,19 @@
 
 `ongoing...`
 
-##Backend.router
+## Backend.router
 
-####General information
+#### General information
 ---
-######Router : **/api**
+###### Router : **/api**
 
-######Versionning :
+###### Versionning :
 
-* ######**/v1**
+* ###### **/v1**
 
 ####Controllers
 ---
-######> **/users**
+###### > **/users**
 
 | Routes Method | Query Params | Description | Trottle |
 | :-------------------- | :-------------------: | :--------------- | ---------: |
@@ -32,7 +32,7 @@
 | `patch("/{id}")`      | none                  | Modify a user | none |
 | `delete("/{id}")`     | none                  | Delete a user | none |
 
-######> **/posts**
+###### > **/posts**
 
 | Routes Method | Query Params | Description | Trottle |
 | :-------------------- | :-------------------: | :--------------- | ---------: |
@@ -43,7 +43,7 @@
 | `delete("/{id}")`     | none                  | Delete a post | none |
 
 
-######> **/comments**
+###### > **/comments**
 
 | Routes Method | Query Params | Description | Trottle |
 | :-------------------- | :-------------------: | :--------------- | ---------: |
@@ -53,7 +53,7 @@
 | `patch("/{id}")`      | none                  | Modify a comment | none |
 | `delete("/{id}")`     | none                  | Delete a comment | none |
 
-######> **/likes**
+###### > **/likes**
 
 | Routes Method | Query Params | Description | Trottle |
 | :-------------------- | :-------------------: | :--------------- | ---------: |
@@ -62,7 +62,7 @@
 | `post("/posts")`      | none                  | Manage like state on post | none |
 | `post("/comments")`   | none                  | Manage like state on comment | none |
 
-######> **/reports**
+###### > **/reports**
 
 | Routes Method | Query Params | Description | Trottle |
 | :-------------------- | :-------------------: | :--------------- | ---------: |
