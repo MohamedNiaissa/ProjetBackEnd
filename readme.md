@@ -6,12 +6,17 @@
 * [WIP](#WIP)
 
 ##Installation
+
 `ongoing...`
+
 ##Backend.router
+
 ####General information
 ---
 ######Router : **/api**
+
 ######Versionning :
+
 * ######**/v1**
 
 ####Controllers
