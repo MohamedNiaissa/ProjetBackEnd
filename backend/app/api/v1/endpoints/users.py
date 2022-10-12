@@ -4,43 +4,49 @@ from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
-@router.get("users/")
-def getUsers():
+
+@router.get("/")
+def get_users():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.get("users/{id}")
-def getUserById(id):
+
+@router.get("/{id}")
+def get_user_by_id(id):
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.get("users/me")
-def getMyUser():
+
+@router.get("/me")
+def get_my_user():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.post("users/")
-def createUser():
+
+@router.post("/")
+def create_user():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.patch("users/{id}")
-def modifyUser():
+
+@router.patch("/{id}")
+def modify_user():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.delete("users/{id}")
-def deleteUser(id):
+
+@router.delete("/{id}")
+def delete_user(id):
     try:
         return {}
     except HTTPException:
