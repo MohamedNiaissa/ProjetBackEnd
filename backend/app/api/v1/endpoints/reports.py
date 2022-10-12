@@ -5,22 +5,24 @@ from fastapi import APIRouter, HTTPException
 router = APIRouter()
 
 
-@router.get("reports/")
-def getReport():
+@router.get("/")
+def get_report():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.post("reports/")
-def createReport():
+
+@router.post("/")
+def create_report():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.delete("reports/{id}")
-def deleteReport(id):
+
+@router.delete("/{id}")
+def delete_report(id):
     try:
         return {}
     except HTTPException:
