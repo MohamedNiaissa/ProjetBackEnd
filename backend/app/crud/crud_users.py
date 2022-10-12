@@ -2,7 +2,7 @@ import imp
 from api.v1.endpoints import users
 from core.config import Settings
 
-class CRUDUser():
+class CRUD_user():
     """
     Make sure to have the connection with the db and the users collection, so we can do all the oprations that we need
     in the functions below.

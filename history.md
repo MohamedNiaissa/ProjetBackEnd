@@ -38,4 +38,4 @@ Put templates of endpoints
 ## 0.2.6 (2022-10-22)
 Updated templates for CRUD
 * CRUD users template
-    * add docstring for the functions in the class CRUDUser
+    * add docstring for the functions in the class CRUD_user
