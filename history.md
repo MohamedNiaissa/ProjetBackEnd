@@ -67,3 +67,10 @@ Updated templates for CRUD
 * CRUD reports template
     * add docstring for the functions in the class CRUD_reports
 
+## 0.2.12 (2022-10-11)
+Updated templates for CRUD
+* CRUD posts template
+    * add docstring for the functions in the class CRUD_posts
+
+
+

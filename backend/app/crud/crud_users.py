@@ -23,6 +23,10 @@ class CRUD_users():
     def get_by_id(id):
         """
         This function fetch the user chosen by its ID from the collection called users
+        
+        Args:
+            id (number): id of the user
+            
         Returns:
             JSON: informations of the choosen user
         """
