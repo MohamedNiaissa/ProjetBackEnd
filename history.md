@@ -28,5 +28,40 @@ Updated requirements
 * python-dotenv
 
 ## 0.2.3 (2022-10-12)
+Put templates of endpoints
+* comments.py
+* likes.py
+* posts.py 
+* reports.py
+* users.py
+
+## 0.2.4 (2022-10-12)
 Updated models
 * added users basemodel
+
+## 0.2.5 (2022-10-12)
+Updated models
+* added comments basemodel
+
+## 0.2.6 (2022-10-12)
+Updated models
+* added posts basemodel
+
+## 0.2.7 (2022-10-12)
+Updated templates for CRUD
+* CRUD users template
+    * add docstring for the functions in the class CRUD_user
+
+## 0.2.8 (2022-10-12)
+Added JWT encode, decode + database init dependence
+* added python-jose lib
+* added passlib lib
+* jwt encode
+* jwt decode
+* auth guard (soon a decorator)
+* password checks
+* db instance dependence
+
+## 0.2.9 (2022-10-12)
+Updated models
+* added reports basemodel
