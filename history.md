@@ -34,3 +34,8 @@ Put templates of endpoints
 * posts.py 
 * reports.py
 * users.py
+
+## 0.2.6 (2022-10-22)
+Updated templates for CRUD
+* CRUD users template
+    * add docstring for the functions in the class CRUDUser
