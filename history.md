@@ -18,3 +18,11 @@ Backend can be launched
 ## 0.2.1 (2022-10-11)
 Added requirements
 * generated requirements.txt with pipreqs
+* fastapi
+* pymongo
+* tenacity
+* uvicorn
+
+## 0.2.2 (2022-10-11)
+Updated requirements
+* python-dotenv
