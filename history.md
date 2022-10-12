@@ -26,3 +26,11 @@ Added requirements
 ## 0.2.2 (2022-10-11)
 Updated requirements
 * python-dotenv
+
+## 0.2.3 (2022-10-12)
+Put templates of endpoints
+* comments.py
+* likes.py
+* posts.py 
+* reports.py
+* users.py
