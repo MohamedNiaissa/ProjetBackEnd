@@ -6,6 +6,9 @@ class Settings():
 	BACKEND_CORS_ORIGINS: str = config["BACKEND_CORS_ORIGINS"]
 	MONGO_URI: str = config["MONGO_URI"]
 	MONGO_DB_NAME: str = config["MONGO_DB_NAME"]
+	SECRET_JWT_KEY: str = config["SECRET_JWT_KEY"]
+	ACCESS_TOKEN_EXPIRE_MINUTES: str = config["ACCESS_TOKEN_EXPIRE_MINUTES"]
+	ENCODE_ALGORITHM: str = config["ENCODE_ALGORITHM"]
 
 
 settings = Settings()
