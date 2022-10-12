@@ -2,7 +2,7 @@ from api.v1.endpoints import users
 from core.config import Settings
 from fastapi import HTTPException
 
-class CRUD_user():
+class CRUD_users():
     """
     Make sure to have the connection with the db and the users collection, so we can do all the oprations that we need
     in the functions below.
