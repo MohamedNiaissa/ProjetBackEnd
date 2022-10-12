@@ -12,12 +12,14 @@ def get_report():
     except HTTPException:
         pass 
 
+
 @router.post("/")
 def create_report():
     try:
         return {}
     except HTTPException:
         pass 
+
 
 @router.delete("/{id}")
 def delete_report(id):
