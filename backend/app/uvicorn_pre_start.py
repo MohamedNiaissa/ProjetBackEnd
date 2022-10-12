@@ -1,8 +1,9 @@
 import logging
+import uvicorn
+
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
 from mongo.init_db import client
 from core.config import settings
-import uvicorn
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -21,7 +22,6 @@ def init() -> None:
 	try:
 		# Try to create client and db to check if awake
 		client.server_info()
-		client[settings.MONGO_DB_NAME]
 	except Exception as e:
 		logger.error(e)
 		raise e

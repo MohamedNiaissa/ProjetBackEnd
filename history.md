@@ -51,3 +51,13 @@ Updated models
 Updated templates for CRUD
 * CRUD users template
     * add docstring for the functions in the class CRUD_user
+
+## 0.2.8 (2022-10-11)
+Added JWT encode, decode + database init dependence
+* added python-jose lib
+* added passlib lib
+* jwt encode
+* jwt decode
+* auth guard (soon a decorator)
+* password checks
+* db instance dependence
