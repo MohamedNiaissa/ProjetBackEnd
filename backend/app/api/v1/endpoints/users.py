@@ -1,6 +1,6 @@
 from typing import Any, List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from crud import crud_users
 from fastapi.encoders import jsonable_encoder
 
@@ -10,29 +10,47 @@ router = APIRouter()
 
 @router.get("/")
 def get_users(): 
-    crud_users.CRUDUser.get_all
+    try:
+        crud_users.CRUD_user.get_all
+    except HTTPException:
+        pass
 
 
 @router.get("/{id}")
 def get_user_by_id(id):
-    crud_users.CRUDUser.get_by_id(id)
+    try:
+        crud_users.CRUD_user.get_by_id(id)
+    except HTTPException:
+        pass
 
 
 @router.get("/me")
 def get_my_user():
-    crud_users.CRUDUser.get_my
+    try:
+        crud_users.CRUD_user.get_my
+    except HTTPException:
+        pass
 
 
 @router.post("/")
 def create_user():
-    crud_users.CRUDUser.create
+    try:
+        crud_users.CRUD_user.create
+    except HTTPException:
+        pass
 
 
 @router.patch("/{id}")
 def modify_user(id):
-    crud_users.CRUDUser.modify(id)
+    try:
+        crud_users.CRUD_user.modify(id)
+    except HTTPException:
+        pass
 
 
 @router.delete("/{id}")
 def delete_user(id):
-    crud_users.CRUDUser.delete(id)
+    try:
+        crud_users.CRUD_user.delete(id)
+    except HTTPException:
+        pass

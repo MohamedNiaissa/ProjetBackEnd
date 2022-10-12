@@ -1,6 +1,6 @@
-import imp
 from api.v1.endpoints import users
 from core.config import Settings
+from fastapi import HTTPException
 
 class CRUD_user():
     """
