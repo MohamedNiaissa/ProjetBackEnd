@@ -34,3 +34,7 @@ Updated models
 ## 0.2.4 (2022-10-12)
 Updated models
 * added comments basemodel
+
+## 0.2.5 (2022-10-22)
+Updated models
+* added posts basemodel
