@@ -27,7 +27,7 @@ Added requirements
 Updated requirements
 * python-dotenv
 
-## 0.2.7 (2022-10-11)
+## 0.2.8 (2022-10-11)
 Added JWT encode, decode + database init dependence
 * added python-jose lib
 * added passlib lib
