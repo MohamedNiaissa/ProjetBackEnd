@@ -65,3 +65,7 @@ Added JWT encode, decode + database init dependence
 ## 0.2.9 (2022-10-12)
 Updated models
 * added reports basemodel
+
+## 0.2.10 (2022-10-12)
+Updated models
+* added likes basemodel
