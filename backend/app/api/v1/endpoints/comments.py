@@ -4,36 +4,36 @@ from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
-@router.get("comments/")
-def getComments():
+@router.get("/")
+def get_comments():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.get("comments/{id}")
-def getCommentById(id):
+@router.get("/{id}")
+def get_commentById(id):
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.post("comments/")
-def createComment():
+@router.post("/")
+def create_comment():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.patch("comments/{id}")
-def modifyComment():
+@router.patch("/{id}")
+def modify_comment():
     try:
         return {}
     except HTTPException:
         pass 
 
-@router.delete("comments/{id}")
-def deleteComment(id):
+@router.delete("/{id}")
+def delete_comment(id):
     try:
         return {}
     except HTTPException:
