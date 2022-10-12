@@ -1,11 +1,11 @@
 ###### History
 
-## 0.0.1 (2022-09-11)
+## 0.0.1 (2022-10-11)
 Backend setup.
 * .gitignore
 * .md
 
-## 0.1.0 (2022-09-11)
+## 0.1.0 (2022-10-11)
 Backend setup.
 * project structure added (empty)
 
@@ -43,16 +43,16 @@ Updated models
 Updated models
 * added comments basemodel
 
-## 0.2.6 (2022-10-22)
+## 0.2.6 (2022-10-12)
 Updated models
 * added posts basemodel
 
-## 0.2.7 (2022-10-22)
+## 0.2.7 (2022-10-12)
 Updated templates for CRUD
 * CRUD users template
     * add docstring for the functions in the class CRUD_user
 
-## 0.2.8 (2022-10-11)
+## 0.2.8 (2022-10-12)
 Added JWT encode, decode + database init dependence
 * added python-jose lib
 * added passlib lib
@@ -61,3 +61,7 @@ Added JWT encode, decode + database init dependence
 * auth guard (soon a decorator)
 * password checks
 * db instance dependence
+
+## 0.2.9 (2022-10-12)
+Updated models
+* added reports basemodel
