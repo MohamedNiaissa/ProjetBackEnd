@@ -1,5 +1,7 @@
 from typing import Any, List
 
+from crud import crud_likes
+
 from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
@@ -8,7 +10,7 @@ router = APIRouter()
 @router.get("/posts/{id}")
 def get_likes_by_post_id(id):
     try:
-        return {}
+        return crud_likes.CRUD_likes.get_by_comment_id(id)
     except HTTPException:
         pass 
 
@@ -16,7 +18,7 @@ def get_likes_by_post_id(id):
 @router.get("/comments/{id}")
 def get_likes_by_comment_id(id):
     try:
-        return {}
+        return crud_likes.CRUD_likes.get_by_comment_id(id)
     except HTTPException:
         pass 
 
@@ -24,7 +26,7 @@ def get_likes_by_comment_id(id):
 @router.post("/comments")
 def manage_like_on_comment():
     try:
-        return {}
+        return crud_likes.CRUD_likes.manage_on_comment
     except HTTPException:
         pass 
 
@@ -32,7 +34,7 @@ def manage_like_on_comment():
 @router.post("/posts")
 def manage_like_on_post():
     try:
-        return {}
+        return crud_likes.CRUD_likes.manage_on_post
     except HTTPException:
         pass 
 

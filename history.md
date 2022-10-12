@@ -72,5 +72,10 @@ Updated templates for CRUD
 * CRUD posts template
     * add docstring for the functions in the class CRUD_posts
 
+## 0.2.13 (2022-10-11)
+Updated templates for CRUD
+* CRUD likes template
+    * add docstring for the functions in the class CRUD_likes
+
 
 
