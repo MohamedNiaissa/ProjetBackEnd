@@ -8,4 +8,6 @@ prod.env
 .vscode
 .DS_STORE
 
+__pycache__
+
 test.py
