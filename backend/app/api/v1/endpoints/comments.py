@@ -12,7 +12,7 @@ def get_comments():
         pass 
 
 @router.get("/{id}")
-def get_commentById(id):
+def get_comment_by_id(id):
     try:
         return {}
     except HTTPException:
