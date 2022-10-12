@@ -1,8 +1,10 @@
 # ENVIRONNEMENTS
+__pycache__
 .virtualenvs
 dev.env
 prod.env
 .env
+
 
 .idea
 .vscode
