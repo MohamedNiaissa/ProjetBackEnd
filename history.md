@@ -30,3 +30,7 @@ Updated requirements
 ## 0.2.3 (2022-10-12)
 Updated models
 * added users basemodel
+
+## 0.2.4 (2022-10-12)
+Updated models
+* added comments basemodel
