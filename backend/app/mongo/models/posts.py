@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 class PostBase(BaseModel):
     id: str = Field(alias="_id")
     title: str
-    message: str
+    description: str
     user_id: str = Field(alias="userId")
     tag: str
     nb_like: int

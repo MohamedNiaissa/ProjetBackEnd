@@ -13,7 +13,7 @@ class UserBase(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "id": 43 ,
+                "id": 43,
                 "username": "GeneralUserName",
                 "email": "Generic.mail@gmail.com",
                 "password": "password123",
