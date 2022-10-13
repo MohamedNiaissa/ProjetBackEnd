@@ -1,10 +1,19 @@
-from api.v1.endpoints import posts
-from core.config import Settings
 from fastapi import HTTPException
+from pymongo.collection import Collection
+from pymongo.database import Database
 
-class CRUD_comments():
-    
-    def get_all():
+from api.v1.endpoints import comments
+from api.deps import get_db
+from core.config import settings
+
+class CRUDComments():
+    db_comments: Collection
+
+    def __init__(self, db: Database):
+        self.db_comments = db.get_collection("comments")
+
+
+    def get_all(self):
         """
         This function fetch all the comments from the collection called comments
 
@@ -16,7 +25,7 @@ class CRUD_comments():
         except HTTPException:
             pass 
 
-    def get_by_id(id):
+    def get_by_id(self, id: str):
         """
         This function fetch the comment chosen by its ID from the collection called comments
 
@@ -31,7 +40,7 @@ class CRUD_comments():
         except HTTPException:
             pass 
 
-    def create():
+    def create(self, id: str):
         """
         Create a comment and insert it on the comments collection
 
@@ -43,7 +52,7 @@ class CRUD_comments():
         except HTTPException:
             pass 
 
-    def modify():
+    def modify(self, id: str):
         """
         Modify one or more specific data from a specific comment
         
@@ -58,7 +67,7 @@ class CRUD_comments():
         except HTTPException:
             pass 
 
-    def delete(id):
+    def delete(self, id: str):
         """
         Delete a specific comment     
 
@@ -72,3 +81,6 @@ class CRUD_comments():
             return {}
         except HTTPException:
             pass 
+
+
+comments = CRUDComments(next(get_db()))

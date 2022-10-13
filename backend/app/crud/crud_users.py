@@ -1,14 +1,19 @@
-from api.v1.endpoints import users
-from core.config import Settings
 from fastapi import HTTPException
+from pymongo.collection import Collection
+from pymongo.database import Database
 
-class CRUD_users():
-    """
-    Make sure to have the connection with the db and the users collection, so we can do all the oprations that we need
-    in the functions below.
-    """
-        
-    def get_all():
+from api.v1.endpoints import users
+from api.deps import get_db
+from core.config import settings
+
+class CRUDUsers():
+    db_users: Collection
+
+    def __init__(self, db: Database):
+        self.db_users = db.get_collection("users")
+
+
+    def get_all(self):
         """
         This function fetch all the users from the collection called users 
 
@@ -20,7 +25,7 @@ class CRUD_users():
         except HTTPException:
             pass 
     
-    def get_by_id(id):
+    def get_by_id(self, id: str):
         """
         This function fetch the user chosen by its ID from the collection called users
         
@@ -35,7 +40,7 @@ class CRUD_users():
         except:
             pass
 
-    def get_my():
+    def get_my(self):
         """
         This function fetch the current connected user from the collection called users
         Returns:
@@ -46,7 +51,7 @@ class CRUD_users():
         except:
             pass
 
-    def create():
+    def create(self):
         """
         Create a user and insert it on the users collection
 
@@ -59,7 +64,7 @@ class CRUD_users():
             pass 
 
 
-    def modify(id):
+    def modify(self, id: str):
         """
         Modify one or more specific data from a specific user
 
@@ -74,9 +79,9 @@ class CRUD_users():
         except HTTPException:
             pass 
 
-    def delete(id):
+    def delete(self, id: str):
         """
-        Delete a specific user     
+        Delete a specific user
 
         Args:
             id (number): id of the user
@@ -88,3 +93,6 @@ class CRUD_users():
             return {}
         except HTTPException:
             pass 
+
+
+users = CRUDUsers(next(get_db()))

@@ -115,3 +115,12 @@ Added auth guard decorator + integrations
 ## 0.2.19 (2022-10-13)
 Updated schemas
 * added schema for posts
+
+## 0.2.20 (2022-10-13)
+Updated CRUD
+* added db collection
+* comments
+* likes
+* posts
+* reports
+* users
