@@ -1,10 +1,19 @@
-from api.v1.endpoints import reports
-from core.config import Settings
 from fastapi import HTTPException
+from pymongo.collection import Collection
+from pymongo.database import Database
 
-class CRUD_reports():
-    
-    def get(id):        
+from api.v1.endpoints import reports
+from api.deps import get_db
+from core.config import settings
+
+class CRUDReports():
+    db_reports: Collection
+
+    def __init__(self, db: Database):
+        self.db_reports = db.get_collection("reports")
+
+
+    def get(self, id: str):
         """
         Fetch the list of all reports or fetch a report by its ID, if the ID is mentionned
 
@@ -20,7 +29,7 @@ class CRUD_reports():
             pass 
 
 
-    def create():
+    def create(self):
         """
         Create a report and insert the data in the reports collection
 
@@ -33,7 +42,7 @@ class CRUD_reports():
             pass 
 
 
-    def delete(id):
+    def delete(self, id: str):
         """
         Delete a specific report
 
@@ -47,3 +56,6 @@ class CRUD_reports():
             return {}
         except HTTPException:
             pass 
+
+
+reports = CRUDReports(next(get_db()))

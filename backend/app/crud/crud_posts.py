@@ -1,10 +1,19 @@
-from api.v1.endpoints import posts
-from core.config import Settings
 from fastapi import HTTPException
+from pymongo.collection import Collection
+from pymongo.database import Database
 
-class CRUD_posts():
-    
-    def get_all():
+from api.v1.endpoints import posts
+from api.deps import get_db
+from core.config import settings
+
+class CRUDPosts():
+    db_posts: Collection
+
+    def __init__(self, db: Database):
+        self.db_posts = db.get_collection("posts")
+
+
+    def get_all(self):
         """
         This function fetch all the posts from the collection called posts
 
@@ -17,7 +26,7 @@ class CRUD_posts():
             pass 
 
 
-    def get_by_id(id):
+    def get_by_id(self, id: str):
         """
         This function fetch the post chosen by its ID from the collection called posts
 
@@ -33,7 +42,7 @@ class CRUD_posts():
             pass 
 
 
-    def create():
+    def create(self):
         """
         Create a post and insert it on the posts collection
 
@@ -46,7 +55,7 @@ class CRUD_posts():
             pass 
 
 
-    def modify(id):
+    def modify(self, id: str):
         """
         Modify one or more specific data from a specific post
         
@@ -62,7 +71,7 @@ class CRUD_posts():
             pass 
 
 
-    def delete(id):
+    def delete(self, id: str):
         """
         Delete a specific post     
 
@@ -76,5 +85,6 @@ class CRUD_posts():
             return {}
         except HTTPException:
             pass 
-    
-         
+
+
+posts = CRUDPosts(next(get_db()))

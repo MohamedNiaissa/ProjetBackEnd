@@ -29,7 +29,7 @@ def get_likes_by_comment_id():
 @auth_guard("user")
 def manage_like_on_comment(request: Request):
     try:
-        return crud_likes.CRUD_likes.manage_on_comment
+        return crud_likes.CRUD_likes.manage_on_comment()
     except HTTPException:
         pass 
 
@@ -38,7 +38,7 @@ def manage_like_on_comment(request: Request):
 @auth_guard("user")
 def manage_like_on_post(request: Request):
     try:
-        return crud_likes.CRUD_likes.manage_on_post
+        return crud_likes.CRUD_likes.manage_on_post()
     except HTTPException:
         pass 
 

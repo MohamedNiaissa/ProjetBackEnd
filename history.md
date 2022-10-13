@@ -106,6 +106,25 @@ Added auth guard decorator + integrations
 * generator yield for mongodb database
 * routes order fixed
 
+## 0.2.18 (2022-10-13)
+* Fix several CRUD issues
+    * bad imports
+    * rename 
+    * put the fonctions in a good order
+
+## 0.2.19 (2022-10-13)
+Updated schemas
+* added schema for posts
+
+## 0.2.20 (2022-10-13)
+Updated CRUD
+* added db collection
+* comments
+* likes
+* posts
+* reports
+* users
+
 ## 0.2.21 (2022-10-13)
 Updated schemas
 * added schema for reports

@@ -11,7 +11,7 @@ router = APIRouter()
 @router.get("/")
 def get_comments():
     try:
-        return crud_comments.CRUD_comments.get_all
+        return crud_comments.CRUD_comments.get_all()
     except HTTPException:
         pass 
 
@@ -20,7 +20,7 @@ def get_comments():
 @auth_guard("user")
 def create_comment(request: Request):
     try:
-        return crud_comments.CRUD_comments.create
+        return crud_comments.CRUD_comments.create()
     except HTTPException:
         pass 
 
