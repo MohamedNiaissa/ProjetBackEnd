@@ -137,3 +137,6 @@ Updated schemas
 Updated models
 * added config for user models
 * improved config for comment models
+
+## 0.2.24 (2022-10-13)
+Updated docstring for api/endpoints
