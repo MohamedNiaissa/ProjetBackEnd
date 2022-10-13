@@ -1,6 +1,7 @@
 from typing import Any, List
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from api.deps import auth_guard
 from crud import crud_comments
 
 
@@ -8,23 +9,16 @@ router = APIRouter()
 
 
 @router.get("/")
-def get():
+def get_comments():
     try:
         return crud_comments.CRUD_comments.get_all
     except HTTPException:
         pass 
 
 
-@router.get("/{id}")
-def get_by_id(id):
-    try:
-        return crud_comments.CRUD_comments.get_by_id(id)
-    except HTTPException:
-        pass 
-
-
 @router.post("/")
-def create():
+@auth_guard("user")
+def create_comment(request: Request):
     try:
         return crud_comments.CRUD_comments.create
     except HTTPException:
@@ -32,16 +26,20 @@ def create():
 
 
 @router.patch("/{id}")
-def modify():
-    try:
-        return crud_comments.CRUD_comments.modify(id)
-    except HTTPException:
-        pass 
+@auth_guard("user")
+def modify_comment(request: Request):
+	try:
+		# return crud_comments.CRUD_comments.modify(id)
+		print(request.attach_user)
+	except HTTPException:
+		pass 
 
 
 @router.delete("/{id}")
-def delete(id):
-    try:
-        return crud_comments.CRUD_comments.delete(id)
-    except HTTPException:
-        pass 
+@auth_guard("user")
+def delete_comment(request: Request):
+	try:
+		# return crud_comments.CRUD_comments.delete(id)
+		print(request.attach_user)
+	except HTTPException:
+		pass 
