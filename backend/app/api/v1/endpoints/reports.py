@@ -11,18 +11,20 @@ router = APIRouter()
 @auth_guard("admin")
 def get_report(request: Request):
     try:
+        # return crud_reports.CRUD_reports.get()
+
         print(request)
         print(request.attach_user)
         return { "sucess": True }
     except HTTPException:
         pass 
-
+    
 
 @router.post("/")
 @auth_guard("user")
 def create_report(request: Request):
     try:
-        return crud_reports.CRUD_reports.create
+        return crud_reports.CRUD_reports.create()
     except HTTPException:
         pass 
 

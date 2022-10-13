@@ -105,3 +105,9 @@ Added auth guard decorator + integrations
 * link to jwt decode and return user
 * generator yield for mongodb database
 * routes order fixed
+
+## 0.2.18 (2022-10-13)
+* Fix several CRUD issues
+    * bad imports
+    * rename 
+    * put the fonctions in a good order
