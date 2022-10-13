@@ -21,7 +21,8 @@ class CRUDUsers():
             JSON: informations of all users
         """
         try:
-            return {}
+            users = self.db_users.find({})                
+            return users
         except HTTPException:
             pass 
     
@@ -51,7 +52,7 @@ class CRUDUsers():
         except:
             pass
 
-    def create(self):
+    def create(self,user):
         """
         Create a user and insert it on the users collection
 
@@ -59,7 +60,15 @@ class CRUDUsers():
             JSON: inserted infos for the created user
         """
         try:
-            return {}
+            # user = {
+            #     "username" : user.username,
+            #     "email": user.email,
+            #     "password": user.password,
+            #     "token" : user.token,
+            #     "salt" : user.salt,
+            #     "refresh_token" : user.refresh_token
+            # }
+            return self.db_users.insert_one(user)
         except HTTPException:
             pass 
 
