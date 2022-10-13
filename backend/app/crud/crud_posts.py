@@ -1,4 +1,5 @@
 from mimetypes import init
+from bson import ObjectId
 from fastapi import HTTPException
 from pymongo.collection import Collection
 from pymongo.database import Database
@@ -28,7 +29,7 @@ class CRUDPosts():
             pass 
 
 
-    def get_by_id(self, id: str):
+    def get_by_id(self, id):
         """
         This function fetch the post chosen by its ID from the collection called posts
 
@@ -39,7 +40,9 @@ class CRUDPosts():
             JSON: all informations of the choosen post
         """
         try:
-            return {}
+            objInstance = ObjectId(id)
+            post = self.db_posts.find_one({"_id": objInstance})
+            return post
         except HTTPException:
             pass 
 

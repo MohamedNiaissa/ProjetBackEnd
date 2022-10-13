@@ -6,13 +6,8 @@ from fastapi import APIRouter, HTTPException, Request
 from api.deps import auth_guard
 from crud import crud_posts
 from mongo.schemas.posts import *
-from mongo import schemas,models
-
-
-#post : PostBase
 
 router = APIRouter()
-
 
 @router.get("/", response_model=List[PostBase])
 def get_posts():
@@ -23,11 +18,10 @@ def get_posts():
         pass 
 
 
-@router.get("/{id}")
-def get_post_by_id():
+@router.get("/{id}", response_model=PostBase)
+def get_post_by_id(id):
 	try:
-		# return crud_posts.CRUD_posts.get_by_id(id)
-		return {}
+		return crud_posts.posts.get_by_id(id)
 	except HTTPException:
 		pass 
 
