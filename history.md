@@ -140,3 +140,10 @@ Updated models
 
 ## 0.2.24 (2022-10-13)
 Updated docstring for api/endpoints
+
+## 0.3.0 (2022-10-13)
+Implemented the logic for auth signup/login
+* Verified if auth guard was succesfull with real data.
+* Added some utility function for models
+* Fixed a few properties of users.model
+* Moved get_db because of circular import

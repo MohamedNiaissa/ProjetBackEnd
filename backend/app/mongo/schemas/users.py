@@ -1,15 +1,17 @@
+from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
 
 
 # Shared properties of user
 class UserBase(BaseModel):
-    username: str
-    mail: EmailStr
-    isAdmin: bool | None = None
+    email: Optional[EmailStr] = None
+    username: Optional[str] = None
+    isAdmin: bool = False
 
 
 # properties to receive via API on creation
 class UserCreate(UserBase):
+    email: EmailStr
     password: str
 
 
@@ -19,10 +21,7 @@ class UserUpdate(UserBase):
 
 
 class UserInDBBase(UserBase):
-    id: str = Field(alias="_id")
-    salt: str
-    token: str
-    refresh_token: str
+	id: Optional[str] = Field(alias="_id")
 
 
 # additional properties to return via API
@@ -32,4 +31,4 @@ class User(UserInDBBase):
 
 # additional properties to store in DB
 class UserInDB(UserInDBBase):
-    pass
+    password: str
