@@ -124,3 +124,7 @@ Updated CRUD
 * posts
 * reports
 * users
+
+## 0.2.21 (2022-10-13)
+Updated schemas
+* added schema for reports
