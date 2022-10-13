@@ -9,7 +9,7 @@ router = APIRouter()
 @router.get("/")
 def get_posts():
     try:
-        return crud_posts.CRUD_posts.get_all
+        return crud_posts.CRUD_posts.get_all()
     except HTTPException:
         pass 
 
@@ -25,7 +25,7 @@ def get_post_by_id(id):
 @router.post("/")
 def create_post():
     try:
-        return crud_posts.CRUD_posts.create
+        return crud_posts.CRUD_posts.create()
     except HTTPException:
         pass 
 

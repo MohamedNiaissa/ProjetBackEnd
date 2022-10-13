@@ -11,9 +11,20 @@ router = APIRouter()
 @router.get("/")
 def get_users(): 
     try:
-        crud_users.CRUD_users.get_all
+        crud_users.CRUD_users.get_all()
+        return {"users" : "user", "use":"use"}
     except HTTPException:
         pass
+
+    
+
+@router.get("/me")
+def get_my_user():
+    try:
+        crud_users.CRUD_users.get_my()
+    except HTTPException:
+        pass
+
 
 
 @router.get("/{id}")
@@ -24,18 +35,10 @@ def get_user_by_id(id):
         pass
 
 
-@router.get("/me")
-def get_my_user():
-    try:
-        crud_users.CRUD_users.get_my
-    except HTTPException:
-        pass
-
-
 @router.post("/")
 def create_user():
     try:
-        crud_users.CRUD_users.create
+        crud_users.CRUD_users.create()
     except HTTPException:
         pass
 

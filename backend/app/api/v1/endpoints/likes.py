@@ -26,7 +26,7 @@ def get_likes_by_comment_id(id):
 @router.post("/comments")
 def manage_like_on_comment():
     try:
-        return crud_likes.CRUD_likes.manage_on_comment
+        return crud_likes.CRUD_likes.manage_on_comment()
     except HTTPException:
         pass 
 
@@ -34,7 +34,7 @@ def manage_like_on_comment():
 @router.post("/posts")
 def manage_like_on_post():
     try:
-        return crud_likes.CRUD_likes.manage_on_post
+        return crud_likes.CRUD_likes.manage_on_post()
     except HTTPException:
         pass 
 

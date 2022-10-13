@@ -16,7 +16,7 @@ def get_report(id):
 @router.post("/")
 def create_report():
     try:
-        return crud_reports.CRUD_reports.create
+        return crud_reports.CRUD_reports.create()
     except HTTPException:
         pass 
 

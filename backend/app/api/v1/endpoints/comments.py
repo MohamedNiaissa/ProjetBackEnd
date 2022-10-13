@@ -8,15 +8,15 @@ router = APIRouter()
 
 
 @router.get("/")
-def get():
+def get_comments():
     try:
-        return crud_comments.CRUD_comments.get_all
+        return crud_comments.CRUD_comments.get_all()
     except HTTPException:
         pass 
 
 
 @router.get("/{id}")
-def get_by_id(id):
+def get_comment_by_id(id):
     try:
         return crud_comments.CRUD_comments.get_by_id(id)
     except HTTPException:
@@ -24,15 +24,15 @@ def get_by_id(id):
 
 
 @router.post("/")
-def create():
+def create_comment():
     try:
-        return crud_comments.CRUD_comments.create
+        return crud_comments.CRUD_comments.create()
     except HTTPException:
         pass 
 
 
 @router.patch("/{id}")
-def modify():
+def modify_comment():
     try:
         return crud_comments.CRUD_comments.modify(id)
     except HTTPException:
@@ -40,7 +40,7 @@ def modify():
 
 
 @router.delete("/{id}")
-def delete(id):
+def delete_comment(id):
     try:
         return crud_comments.CRUD_comments.delete(id)
     except HTTPException:
