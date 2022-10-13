@@ -3,7 +3,7 @@ from pymongo.collection import Collection
 from pymongo.database import Database
 
 from api.v1.endpoints import comments
-from api.deps import get_db
+from mongo.init_db import get_db
 from core.config import settings
 
 class CRUDComments():

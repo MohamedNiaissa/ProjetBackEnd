@@ -1,5 +1,4 @@
-from typing import Generator, Any
-from webbrowser import get
+from typing import Any
 from pymongo.database import Database
 
 from functools import wraps
@@ -9,14 +8,13 @@ from fastapi import Depends, HTTPException, status
 
 from pydantic import ValidationError
 from jose import jwt, JWTError
+from utils import assert_model
 
 from core.config import settings
-from mongo.init_db import client
+from mongo.init_db import get_db
 
-
-def get_db() -> Generator:
-	db = client[settings.MONGO_DB_NAME]
-	yield db
+from mongo.models.users import User
+from crud.crud_users import users
 
 
 def auth_guard(role: str):
@@ -32,13 +30,14 @@ def auth_guard(role: str):
 			
 			token = auth.replace("Bearer ", "")
 			user = await get_user_from_jwt(next(get_db()), token)
-			if role is "admin" and user["isAdmin"] is False:
+			if role is "admin" and user.isAdmin is False:
 				raise HTTPException(
 					status_code=status.HTTP_403_FORBIDDEN,
 					detail="You are not authorized to access this resource"
 				)
 
-			request.attach_user = user
+			user.id = str(user.id)
+			request.attach_user = user.__dict__
 			return handler(request, *args, **kwargs)
 
 		return wrapper
@@ -48,24 +47,22 @@ def auth_guard(role: str):
 async def get_user_from_jwt(
 	db: Database = Depends(get_db),
 	token = str,
-) -> Any:
-	# try:
-	# 	payload = jwt.decode(
-	# 		token, settings.SECRET_JWT_KEY, algorithms=[settings.ENCODE_ALGORITHM]
-	# 	)
-	# 	token_data = "" #Schema token
-	# except (JWTError, ValidationError):
-	# 	raise HTTPException(
-	# 		status_code=status.HTTP_403_FORBIDDEN,
-	# 		detail="Credentials weren't validated",
-	# 	)
+) -> User:
+	try:
+		payload = jwt.decode(
+			token, settings.SECRET_JWT_KEY, algorithms=[settings.ENCODE_ALGORITHM]
+		)
+		token_data = payload.get("sub")
+	except (JWTError, ValidationError):
+		raise HTTPException(
+			status_code=status.HTTP_403_FORBIDDEN,
+			detail="Credentials weren't validated",
+		)
 
-	# print(payload)
-	user = dict({ "name": "test", "isAdmin": True }) #CRUD get user
-	print(user)
+	user = users.get(token_data)
 	if not user:
 		raise HTTPException(
 			status_code=status.HTTP_404_NOT_FOUND,
 			detail="User not found"
 		)
-	return user
+	return assert_model(user)
