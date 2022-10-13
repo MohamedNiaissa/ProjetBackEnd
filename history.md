@@ -50,7 +50,7 @@ Updated models
 ## 0.2.7 (2022-10-12)
 Updated templates for CRUD
 * CRUD users template
-    * add docstring for the functions in the class CRUD_user
+    * add docstring for the functions in the class CRUD_users
 
 ## 0.2.8 (2022-10-12)
 Added JWT encode, decode + database init dependence
