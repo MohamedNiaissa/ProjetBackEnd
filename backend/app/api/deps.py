@@ -13,7 +13,6 @@ from utils import assert_model
 from core.config import settings
 from mongo.init_db import get_db
 
-from mongo.schemas.token import TokenPayload
 from mongo.models.users import User
 from crud.crud_users import users
 
