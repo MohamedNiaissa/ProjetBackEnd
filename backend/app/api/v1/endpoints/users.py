@@ -1,14 +1,15 @@
 from typing import Any, List
 
 from fastapi import APIRouter, HTTPException
+from api.deps import auth_guard
 from crud import crud_users
-from fastapi.encoders import jsonable_encoder
 
 
 router = APIRouter()
 
 
 @router.get("/")
+@auth_guard("admin")
 def get_users(): 
     try:
         crud_users.CRUD_users.get_all
@@ -17,6 +18,7 @@ def get_users():
 
 
 @router.get("/{id}")
+@auth_guard("admin")
 def get_user_by_id(id):
     try:
         crud_users.CRUD_users.get_by_id(id)
@@ -25,6 +27,7 @@ def get_user_by_id(id):
 
 
 @router.get("/me")
+@auth_guard("user")
 def get_my_user():
     try:
         crud_users.CRUD_users.get_my
@@ -41,6 +44,7 @@ def create_user():
 
 
 @router.patch("/{id}")
+@auth_guard("user")
 def modify_user(id):
     try:
         crud_users.CRUD_users.modify(id)
@@ -49,6 +53,7 @@ def modify_user(id):
 
 
 @router.delete("/{id}")
+@auth_guard("user")
 def delete_user(id):
     try:
         crud_users.CRUD_users.delete(id)
