@@ -98,7 +98,7 @@ Updated schema
 Updated schema
 * added schema for users
 
-## 0.2.16 (2022-10-12)
+## 0.2.17 (2022-10-12)
 Added auth guard decorator + integrations
 * specify user role
 * link to jwt decode and return user
