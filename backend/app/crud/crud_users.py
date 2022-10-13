@@ -2,7 +2,7 @@ from api.v1.endpoints import users
 from core.config import Settings
 from fastapi import HTTPException
 
-class CRUD_user():
+class CRUD_users():
     """
     Make sure to have the connection with the db and the users collection, so we can do all the oprations that we need
     in the functions below.
@@ -23,6 +23,10 @@ class CRUD_user():
     def get_by_id(id):
         """
         This function fetch the user chosen by its ID from the collection called users
+        
+        Args:
+            id (number): id of the user
+            
         Returns:
             JSON: informations of the choosen user
         """
