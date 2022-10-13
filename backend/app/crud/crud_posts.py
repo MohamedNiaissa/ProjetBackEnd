@@ -1,3 +1,4 @@
+from mimetypes import init
 from fastapi import HTTPException
 from pymongo.collection import Collection
 from pymongo.database import Database
@@ -21,7 +22,8 @@ class CRUDPosts():
             JSON: informations of all posts
         """
         try:
-            return {}
+            post = list(self.db_posts.find())
+            return post
         except HTTPException:
             pass 
 
@@ -42,7 +44,7 @@ class CRUDPosts():
             pass 
 
 
-    def create(self):
+    def create(self,post):
         """
         Create a post and insert it on the posts collection
 
@@ -50,7 +52,7 @@ class CRUDPosts():
             JSON: inserted data post
         """
         try:
-            return {}
+            return self.db_posts.insert_one(post)
         except HTTPException:
             pass 
 
