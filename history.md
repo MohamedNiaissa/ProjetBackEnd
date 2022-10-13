@@ -124,3 +124,8 @@ Updated CRUD
 * posts
 * reports
 * users
+
+## 0.2.23 (2022-10-13)
+Updated models
+* added config for user models
+* improved config for comment models
