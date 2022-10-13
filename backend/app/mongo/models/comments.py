@@ -16,10 +16,10 @@ class CommentBase(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "id": "id of comment",
-                "message": "comment content",
-                "id_user": "id of the comment author",
-                "id_post": "id of parent post",
-                "nb_like": "current total of likes"
+                "id": 758,
+                "message": "Nice Post you got there",
+                "id_user": 30,
+                "id_post": 304,
+                "nb_like": 0
             }
         }
