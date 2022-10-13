@@ -60,40 +60,24 @@ def create_user(request: Request, user : UserBase):
 @router.patch("/{id}")
 @auth_guard("user")
 def modify_user(request: Request):
-<<<<<<< HEAD
-	try:
-		print(request.attach_user)
-		crud_users.users.modify(id)
-	except HTTPException:
-		pass
-=======
     """
     Update a user.
     """
     try:
-        # crud_users.CRUD_users.modify(id)
         print(request.attach_user)
+        crud_users.users.modify(id)
     except HTTPException:
         pass
->>>>>>> main
 
 
 @router.delete("/{id}")
 @auth_guard("user")
 def delete_user(request: Request):
-<<<<<<< HEAD
-	try:
-		crud_users.users.delete(id)
-		print(request.attach_user)
-	except HTTPException:
-		pass
-=======
     """
     Delete a user.
     """
     try:
-        # crud_users.CRUD_users.delete(id)
+        crud_users.users.delete(id)
         print(request.attach_user)
     except HTTPException:
         pass
->>>>>>> main
