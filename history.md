@@ -62,22 +62,22 @@ Added JWT encode, decode + database init dependence
 * password checks
 * db instance dependence
 
-## 0.2.11 (2022-10-11)
+## 0.2.11 (2022-10-12)
 Updated templates for CRUD
 * CRUD reports template
     * add docstring for the functions in the class CRUD_reports
 
-## 0.2.12 (2022-10-11)
+## 0.2.12 (2022-10-12)
 Updated templates for CRUD
 * CRUD posts template
     * add docstring for the functions in the class CRUD_posts
 
-## 0.2.13 (2022-10-11)
+## 0.2.13 (2022-10-12)
 Updated templates for CRUD
 * CRUD likes template
     * add docstring for the functions in the class CRUD_likes
 
-## 0.2.14 (2022-10-11)
+## 0.2.14 (2022-10-12)
 Updated templates for CRUD
 * CRUD comments template
     * add docstring for the functions in the class CRUD_comments
