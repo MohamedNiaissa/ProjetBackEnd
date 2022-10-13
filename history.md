@@ -89,3 +89,7 @@ Updated templates for CRUD
 Updated templates for CRUD
 * CRUD comments template
     * add docstring for the functions in the class CRUD_comments
+
+## 0.2.19 (2022-10-13)
+Updated schemas
+* added schema for posts
