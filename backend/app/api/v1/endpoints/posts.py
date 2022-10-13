@@ -26,11 +26,14 @@ def get_post_by_id(id):
 		pass 
 
 
-@router.post("/")
+@router.post("/", response_model=PostBase)
 #@auth_guard("user")
 def create_post(request: Request, post : PostBase):
     try:
-        #return crud_posts.posts.create(post)
+        post = crud_posts.posts.create(post.__dict__)
+        print("^^^^^^^^^^^^^^^^^^^^^^")
+        print(post)
+        print("^^^^^^^^^^^^^^^^^^^^^^")
         return post
     except HTTPException:
         pass 
