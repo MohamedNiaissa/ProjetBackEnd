@@ -105,3 +105,7 @@ Added auth guard decorator + integrations
 * link to jwt decode and return user
 * generator yield for mongodb database
 * routes order fixed
+
+## 0.2.21 (2022-10-13)
+Updated schemas
+* added schema for reports
