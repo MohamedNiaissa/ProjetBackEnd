@@ -111,3 +111,7 @@ Added auth guard decorator + integrations
     * bad imports
     * rename 
     * put the fonctions in a good order
+
+## 0.2.19 (2022-10-13)
+Updated schemas
+* added schema for posts
