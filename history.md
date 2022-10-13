@@ -125,6 +125,14 @@ Updated CRUD
 * reports
 * users
 
+## 0.2.21 (2022-10-13)
+Updated schemas
+* added schema for reports
+
+## 0.2.22(2022-10-13)
+Updated schemas
+* added schema for comments
+
 ## 0.2.23 (2022-10-13)
 Updated models
 * added config for user models
