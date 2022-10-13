@@ -20,7 +20,7 @@ def get_report(request: Request):
 
 @router.post("/")
 @auth_guard("user")
-def create_report():
+def create_report(request: Request):
     try:
         return crud_reports.CRUD_reports.create
     except HTTPException:
@@ -29,8 +29,9 @@ def create_report():
 
 @router.delete("/{id}")
 @auth_guard("admin")
-def delete_report(id):
-    try:
-        return crud_reports.CRUD_reports.delete(id)
-    except HTTPException:
-        pass 
+def delete_report(request: Request):
+	try:
+		# return crud_reports.CRUD_reports.delete(id)
+		print(request.attach_user)
+	except HTTPException:
+		pass 
