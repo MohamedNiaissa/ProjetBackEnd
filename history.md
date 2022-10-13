@@ -90,15 +90,16 @@ Updated templates for CRUD
 * CRUD comments template
     * add docstring for the functions in the class CRUD_comments
 
-## 0.2.15 (2022-10-12)
+## 0.2.15 (2022-10-13)
 Updated schema
 * added schema for users
 
-## 0.2.15 (2022-10-12)
+## 0.2.16 (2022-10-13)
 Updated schema
-* added schema for users
+* added schema for likes
+* Fixed authors display
 
-## 0.2.17 (2022-10-12)
+## 0.2.17 (2022-10-13)
 Added auth guard decorator + integrations
 * specify user role
 * link to jwt decode and return user
