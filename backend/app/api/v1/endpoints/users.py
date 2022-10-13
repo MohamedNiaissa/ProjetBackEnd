@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException, Request
 from api.deps import auth_guard
 from crud import crud_users
 
-from mongo.models.users import UserBase
+from mongo.models.users import User
 router = APIRouter()
 
 
@@ -47,7 +47,7 @@ def get_user_by_id(request: Request):
 
 
 @router.post("/")
-def create_user(request: Request, user : UserBase):
+def create_user(request: Request, user : User):
     """
     Create a new user.
     """

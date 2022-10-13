@@ -33,11 +33,10 @@ def get_post_by_id(id):
 #@auth_guard("user")
 def create_post(request: Request, post : PostBase):
     try:
-        post = crud_posts.posts.create(post.__dict__)
+        crud_posts.posts.create(post.__dict__)
         print("^^^^^^^^^^^^^^^^^^^^^^")
-        print(post)
         print("^^^^^^^^^^^^^^^^^^^^^^")
-        return post
+        return {"response":post.__dict__}    
     except HTTPException:
         pass
 
@@ -56,13 +55,15 @@ def modify_post(request: Request):
 
 
 @router.delete("/{id}")
-@auth_guard("user")
-def delete_post(request: Request):
+# @auth_guard("user")
+def delete_post(request: Request, id):
     """
-    Delete specified post.
+    Delete specified post
     """
     try:
-        # return crud_posts.CRUD_posts.delete(id)
-        print(request.attach_user)
+        #print(request.attach_user)
+        crud_posts.posts.delete(id) 
+        
+        return {"sucess :","deleted"}
     except HTTPException:
         pass

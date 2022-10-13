@@ -65,7 +65,7 @@ class CRUDPosts():
         Modify one or more specific data from a specific post
         
         Args:
-            id (int): id of the post
+             id (int): id of the post
 
         Returns:
             JSON: All the informations of this same post
@@ -87,7 +87,9 @@ class CRUDPosts():
             JSON: All the informations of this same post
         """
         try:
-            return {}
+            objInstance = ObjectId(id)
+            post = self.db_posts.delete_one({"_id": objInstance})
+            return post
         except HTTPException:
             pass 
 
