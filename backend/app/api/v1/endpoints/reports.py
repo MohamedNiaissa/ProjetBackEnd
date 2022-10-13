@@ -1,14 +1,14 @@
-from typing import Any, List
-
 from fastapi import APIRouter, HTTPException
+from crud import crud_reports
+
 
 router = APIRouter()
 
 
 @router.get("/")
-def get_report():
+def get_report(id):
     try:
-        return {}
+        return crud_reports.CRUD_reports.get(id)
     except HTTPException:
         pass 
 
@@ -16,7 +16,7 @@ def get_report():
 @router.post("/")
 def create_report():
     try:
-        return {}
+        return crud_reports.CRUD_reports.create
     except HTTPException:
         pass 
 
@@ -24,6 +24,6 @@ def create_report():
 @router.delete("/{id}")
 def delete_report(id):
     try:
-        return {}
+        return crud_reports.CRUD_reports.delete(id)
     except HTTPException:
         pass 
