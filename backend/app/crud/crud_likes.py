@@ -1,9 +1,19 @@
-from api.v1.endpoints import posts
-from core.config import Settings
 from fastapi import HTTPException
+from pymongo.collection import Collection
+from pymongo.database import Database
 
-class CRUD_likes():
-    def get_by_post_id(id):
+from api.v1.endpoints import likes
+from api.deps import get_db
+from core.config import settings
+
+class CRUDLikes():
+    db_likes: Collection
+
+    def __init__(self, db: Database):
+        self.db_likes = db.get_collection("likes")
+
+
+    def get_by_post_id(self, id: str):
         """
         This function fetch the likes linked to the post chosen by its ID from the collection called likes
 
@@ -18,7 +28,7 @@ class CRUD_likes():
         except HTTPException:
             pass 
 
-    def get_by_comment_id(id):
+    def get_by_comment_id(self, id: str):
         """
         This function fetch the likes linked to the comment chosen by its ID from the collection called likes
 
@@ -35,7 +45,7 @@ class CRUD_likes():
 
 
 
-    def manage_on_comment():
+    def manage_on_comment(self):
         """
         Insert true or false (wheter it is liked or not) and infos linked to the comment such as the commentID and userID
 
@@ -48,7 +58,7 @@ class CRUD_likes():
             pass 
 
 
-    def manage_on_post():
+    def manage_on_post(self):
         """
         Insert true or false (wheter it is liked or not) and infos linked to the post such as the postID and userID
 
@@ -60,3 +70,5 @@ class CRUD_likes():
         except HTTPException:
             pass 
 
+
+likes = CRUDLikes(next(get_db()))
