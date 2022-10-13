@@ -6,12 +6,12 @@ router = APIRouter()
 
 
 @router.get("/")
-def get_report(id):
+def get_report():
     try:
-        return crud_reports.CRUD_reports.get(id)
+        return crud_reports.CRUD_reports.get()
     except HTTPException:
         pass 
-
+    
 
 @router.post("/")
 def create_report():

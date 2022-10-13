@@ -70,7 +70,6 @@ Updated models
 Updated models
 * added likes basemodel
 
-
 ## 0.2.11 (2022-10-12)
 Updated templates for CRUD
 * CRUD reports template
@@ -91,6 +90,12 @@ Updated templates for CRUD
 * CRUD comments template
     * add docstring for the functions in the class CRUD_comments
 
+## 0.2.15 (2022-10-12)
+Updated schema
+* added schema for users
 
-
-
+## 0.2.18 (2022-10-12)
+* Fix several CRUD issues
+    * bad imports
+    * rename 
+    * put the fonctions in a good order
