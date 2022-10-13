@@ -10,7 +10,7 @@ class CRUD_users():
         
     def get_all():
         """
-        This function fetch all the users from the collection called users
+        This function fetch all the users from the collection called users 
 
         Returns:
             JSON: informations of all users

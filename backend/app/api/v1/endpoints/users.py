@@ -1,56 +1,66 @@
 from typing import Any, List
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from api.deps import auth_guard
 from crud import crud_users
-from fastapi.encoders import jsonable_encoder
 
 
 router = APIRouter()
 
 
 @router.get("/")
-def get_users(): 
+@auth_guard("admin")
+def get_users(request: Request): 
     try:
-        crud_users.CRUD_users.get_all
+        crud_users.CRUD_users.get_all()
+        return {"users" : "user", "use":"use"}
+    except HTTPException:
+        pass
+
+    
+
+@router.get("/me")
+@auth_guard("user")
+def get_my_user(request: Request):
+    try:
+        crud_users.CRUD_users.get_my()
     except HTTPException:
         pass
 
 
 @router.get("/{id}")
-def get_user_by_id(id):
-    try:
-        crud_users.CRUD_users.get_by_id(id)
-    except HTTPException:
-        pass
-
-
-@router.get("/me")
-def get_my_user():
-    try:
-        crud_users.CRUD_users.get_my
-    except HTTPException:
-        pass
+@auth_guard("user")
+def get_user_by_id(request: Request):
+	try:
+		# crud_users.CRUD_users.get_by_id(id)
+		print(request.attach_user)
+	except HTTPException:
+		pass
 
 
 @router.post("/")
-def create_user():
+def create_user(request: Request):
     try:
-        crud_users.CRUD_users.create
+        crud_users.CRUD_users.create()
     except HTTPException:
         pass
 
 
 @router.patch("/{id}")
-def modify_user(id):
-    try:
-        crud_users.CRUD_users.modify(id)
-    except HTTPException:
-        pass
+@auth_guard("user")
+def modify_user(request: Request):
+	try:
+		# crud_users.CRUD_users.modify(id)
+		print(request.attach_user)
+	except HTTPException:
+		pass
 
 
 @router.delete("/{id}")
-def delete_user(id):
-    try:
-        crud_users.CRUD_users.delete(id)
-    except HTTPException:
-        pass
+@auth_guard("user")
+def delete_user(request: Request):
+	try:
+		# crud_users.CRUD_users.delete(id)
+		print(request.attach_user)
+	except HTTPException:
+		pass
