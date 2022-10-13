@@ -26,8 +26,8 @@
 | Routes Method | Query Params | Description | Trottle |
 | :-------------------- | :-------------------: | :--------------- | ---------: |
 | `get("/")`            | ?`page=n`&`items=n`   | Retrieve list of `n` users data (admin) | none |
-| `get("/{id}")`        | none                  | Retrieve user data (admin) | none |
-| `get("/me")`          | none                  | Retrieve user data (auth) | none |
+| `get("/{id}")`        | none                  | Retrieve user data | none |
+| `get("/me")`          | none                  | Retrieve user data | none |
 | `post("/")`           | none                  | Create a user | none |
 | `patch("/{id}")`      | none                  | Modify a user | none |
 | `delete("/{id}")`     | none                  | Delete a user | none |
