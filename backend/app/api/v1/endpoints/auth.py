@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 @router.post('/signup')
-async def login(signup_data: UserCreate = Body(...)) -> Token:
+async def login(signup_data: UserCreate = Body(...)):
 	""" Authentification route used for Signup
 
 	Args:
@@ -51,7 +51,7 @@ async def login(signup_data: UserCreate = Body(...)) -> Token:
 
 
 @router.post('/login')
-def login(login_data: UserCreate = Body(...)) -> Token:
+def login(login_data: UserCreate = Body(...)):
 	""" Authentification route used for Login
 
 	Args:

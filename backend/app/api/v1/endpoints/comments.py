@@ -2,6 +2,7 @@ from typing import Any, List
 
 from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
+from mongo.schemas.token import StatusOK
 
 from mongo.schemas.comments import *
 from crud.crud_comments import comments
@@ -11,7 +12,7 @@ from mongo.models.comments import Comment, CommentUpdate
 router = APIRouter()
 
 
-@router.get("/post/{id}", response_model=Comment)
+@router.get("/post/{id}")
 def get_comments(id: str) -> List:
 	""" Get all the reports from the database
 
@@ -47,7 +48,7 @@ def create_comment(request: Request, comment_create: CommentCreate = Body(...)) 
 	return { "status": "OK", "comment_id": id }
 
 
-@router.patch("/{id}", response_model=CommentUpdate)
+@router.patch("/{id}", response_model=StatusOK)
 @auth_guard("user")
 def update_comment(request: Request, id: str, comment_update: CommentToUpdate = Body(...)) -> Any:
 	""" Update a comment content in the database
