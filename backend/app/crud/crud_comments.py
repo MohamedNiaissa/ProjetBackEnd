@@ -24,9 +24,19 @@ class CRUDComments():
 		Returns:
 			List: comments documents
 		"""
-		return list(self.db_comments.find({
+		list_comments = []
+		mongo_comments = list(self.db_comments.find({
 			"postId": ObjectId(id)
 		}))
+		for el in mongo_comments:
+			el["id"] = str(el["_id"])
+			el["user_id"] = str(el["userId"])
+			el["post_id"] = str(el["postId"])
+			el.pop("_id")
+			el.pop("userId")
+			el.pop("postId")
+			list_comments.append(el)
+		return list_comments
 
 	def create(self, comment_data: Comment) -> str:
 		""" Create a comment in the database

@@ -5,18 +5,30 @@ from bson import ObjectId
 from mongo.schemas.users import UserCreate
 
 from core.security import (
-	get_password_hash
+    get_password_hash
 )
+
+
+class UserModel:
+    id: str
+    username: Optional[str] = ...
+    profile_picture: Optional[str] = None
+    email: str
+    password: str
+    isAdmin: bool = False
+
 
 class PyObjectId(ObjectId):
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
+
     @classmethod
     def validate(cls, v):
         if not ObjectId.is_valid(v):
             raise ValueError("Invalid objectid")
         return ObjectId(v)
+
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(type="string")
@@ -29,14 +41,14 @@ class User(BaseModel):
     email: EmailStr
     password: str
     isAdmin: bool = False
-    
+
     @classmethod
     def assert_model_id(self, user_data: Dict) -> Self:
         if "_id" in user_data:
-            id = user_data["_id"]
+            id = str(user_data["_id"])
         else:
-            id = user_data["id"]
-
+            id = str(user_data["id"])
+        
         return self(
             id=id,
             username=user_data["username"],
@@ -66,7 +78,7 @@ class UserToCreate(BaseModel):
     password: str
     isAdmin: bool = False
     profile_picture: str = None
-    
+
     @classmethod
     def assert_model(self, user_data: UserCreate) -> Self:
         return self(

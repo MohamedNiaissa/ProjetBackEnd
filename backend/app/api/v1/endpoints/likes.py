@@ -15,17 +15,18 @@ router = APIRouter()
 
 @router.get("/posts/{id}", response_model=List[LikeUpdatePost])
 def get_likes_by_post_id(id: str):
-	"""_summary_
+	"""Gets like status from a specified post
 
 	Args:
-		id (str): _description_
+		id (str): id of the post to get status from
 
 	Raises:
-		HTTPException: _description_
+		HTTPException: raise 404 if no likes were found or if no posts were found
 
 	Returns:
-		_type_: _description_
+		List : List of information of that like
 	"""
+
 	list_likes = likes.get_by_post_id(id)
 	if len(list_likes) is 0:
 		raise HTTPException(
@@ -38,17 +39,18 @@ def get_likes_by_post_id(id: str):
 
 @router.get("/comments/{id}", response_model=List[LikeUpdateComment])
 def get_likes_by_comment_id(id: str):
-	"""_summary_
+	"""Gets like status from a specified comment
 
 	Args:
-		id (str): _description_
+		id(str): id of the comment to get status from
 
 	Raises:
-		HTTPException: _description_
+		HTTPException: raise 404 if no likes were found or if no comments were found
 
 	Returns:
-		_type_: _description_
-	"""
+		List: list of infos of that like
+"""
+
 	list_likes = likes.get_by_comment_id(id)
 	if len(list_likes) is 0:
 		raise HTTPException(
@@ -62,15 +64,18 @@ def get_likes_by_comment_id(id: str):
 @router.post("/posts", response_model=StatusOK)
 @auth_guard("user")
 def manage_like_on_post(request: Request, likes_state: LikeUpdatePost = Body(...)):
-	"""_summary_
+	"""Changes the status of the like and infos linked to the comment such as the commentID and userID
 
 	Args:
-		request (Request): _description_
-		likes_state (LikeUpdatePost, optional): _description_. Defaults to Body(...).
+		request (Request):  request of the endpoint, post details are attached to it.
+
+	Raises:
+		HTTPException: raise 404 if no comment is found
 
 	Returns:
-		_type_: _description_
-	"""
+		Status: Ok
+		post_id: id of the liked post if it was already liked
+"""
 	is_liked = likes_state.is_liked
 	if is_liked is True:
 		likes_data = LikeToCreatePost.assert_model(request.attach_user["id"], likes_state)
@@ -84,15 +89,18 @@ def manage_like_on_post(request: Request, likes_state: LikeUpdatePost = Body(...
 @router.post("/comments", response_model=StatusOK)
 @auth_guard("user")
 def manage_like_on_comment(request: Request, likes_state: LikeUpdateComment = Body(...)):
-	"""_summary_
+	"""Changes the status of the like and infos linked to the comment such as the commentID and userID
 
 	Args:
-		request (Request): _description_
-		likes_state (LikeUpdateComment, optional): _description_. Defaults to Body(...).
+		request (Request): request of the endpoint, comment details are attached to it.
+
+	Raises:
+		HTTPException: raise 404 if no comment is found
 
 	Returns:
-		_type_: _description_
-	"""
+		Status: Ok
+		post_id: id of the liked comment if it was already liked
+"""
 	is_liked = likes_state.is_liked
 	if is_liked is True:
 		likes_data = LikeToCreateComment.assert_model(request.attach_user["id"], likes_state)

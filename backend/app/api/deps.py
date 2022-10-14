@@ -47,7 +47,7 @@ def auth_guard(role: str):
 			
 			token = auth.replace("Bearer ", "")
 			user = await get_user_from_jwt(token)
-			if role is "admin" and user.isAdmin is False:
+			if role == "admin" and user.isAdmin is False:
 				raise HTTPException(
 					status_code=status.HTTP_403_FORBIDDEN,
 					detail="You are not authorized to access this resource"
