@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import HTTPException, status
 from pymongo.collection import Collection
 from pymongo.database import Database
@@ -10,24 +11,29 @@ class CRUDComments():
 	db_comments: Collection
 
 	def __init__(self, db: Database):
+		""" Init Comments class with the required database collection
+
+		Args:
+			db (Database): mongodb database
+		"""
 		self.db_comments = db.get_collection("comments")
 
-	def get_all(self):
-		"""_summary_
+	def get_all(self) -> List:
+		""" Get all documents in the collection comments
 
 		Returns:
-			_type_: _description_
+			List: comments documents
 		"""
 		return list(self.db_comments.find())
 
 	def create(self, comment_data: Comment) -> str:
-		"""_summary_
+		""" Create a comment in the database
 
 		Args:
-			comment_data (Comment): _description_
+			comment_data (Comment): comment data
 
 		Returns:
-			str: _description_
+			str: id of the comment
 		"""
 
 		comment_data.userId = ObjectId(comment_data.userId)
@@ -36,10 +42,10 @@ class CRUDComments():
 		return str(res.inserted_id)
 
 	def update(self, comment: Comment):
-		"""_summary_
+		""" Update a comment in the database
 
 		Args:
-			comment (Comment): _description_
+			comment (Comment): comment data
 		"""
 		update_filter = { "_id": ObjectId(comment.id) }
 		new_values = {
@@ -49,19 +55,19 @@ class CRUDComments():
 		self.db_comments.update_one(update_filter, new_values)
 
 	def delete(self, id: str):
-		"""_summary_
+		""" Delete a comment in the database
 
 		Args:
-			id (str): _description_
+			id (str): id of the comment
 
 		Raises:
-			HTTPException: _description_
+			HTTPException: raise 400 if comment was not found
 		"""
 		count = self.db_comments.delete_one({"_id": ObjectId(id)})
-		if count.deleted_count is 0:
+		if count.deleted_count == 0:
 			raise HTTPException(
 				status_code=status.HTTP_400_BAD_REQUEST,
-				details="Comment doesn't exist"
+				detail="Comment doesn't exist"
 			)
 
 
