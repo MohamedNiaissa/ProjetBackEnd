@@ -47,7 +47,7 @@ def create_comment(request: Request, comment_create: CommentCreate = Body(...)) 
 	return { "status": "OK", "comment_id": id }
 
 
-@router.patch("/{id}", response_model=CommentUpdate)
+@router.patch("/{id}")
 @auth_guard("user")
 def update_comment(request: Request, id: str, comment_update: CommentToUpdate = Body(...)) -> Any:
 	""" Update a comment content in the database

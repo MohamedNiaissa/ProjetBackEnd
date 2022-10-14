@@ -11,7 +11,7 @@ from mongo.schemas.reports import ReportBase
 router = APIRouter()
 
 
-@router.get("/", response_model=ReportBase)
+@router.get("/")
 @auth_guard("admin")
 def get_report(request: Request) -> List:
 	""" Get all the reports from the database
@@ -34,7 +34,7 @@ def get_report(request: Request) -> List:
 	return reports_list
 
 
-@router.post("/", response_model=ReportBase)
+@router.post("/")
 @auth_guard("user")
 def create_report(request: Request, request_create: ReportBase = Body(...)) -> Any:
 	""" User can submit a report, it can be a post or a comment
