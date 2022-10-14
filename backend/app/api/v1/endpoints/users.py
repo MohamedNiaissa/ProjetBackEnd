@@ -12,16 +12,16 @@ router = APIRouter()
 @router.get("/")
 @auth_guard("admin")
 def get_users(request: Request):
-	"""_summary_
+	"""Gets all users from the database
 
 	Args:
-		request (Request): _description_
+		request (Request): request of the endpoint, details of each user is attached to it
 
 	Raises:
-		HTTPException: _description_
+		HTTPException: raise 404 if no users where found
 
 	Returns:
-		_type_: _description_
+		List: All informations from all users
 	"""
 	users_list = users.get_all()
 	if len(users_list) is 0:
@@ -35,13 +35,13 @@ def get_users(request: Request):
 @router.get("/me")
 @auth_guard("user")
 def get_my_user(request: Request):
-	"""_summary_
+	"""Gets current logged-in user info from the database
 
 	Args:
-		request (Request): _description_
+		request (Request): request of the endpoint, user details are attached to it
 
 	Returns:
-		_type_: _description_
+		JSON: All informations from the attached user
 	"""
 	return request.attach_user
 
@@ -49,17 +49,17 @@ def get_my_user(request: Request):
 @router.get("/{id}")
 @auth_guard("user")
 def get_user_by_id(request: Request, id: str):
-	"""_summary_
+	"""Gets informations of a specified user
 
 	Args:
-		request (Request): _description_
-		id (str): _description_
+		request (Request): request of the endpoint, specified user details are attached to it
+		id (str): id of the specified user
 
 	Raises:
-		HTTPException: _description_
+		HTTPException: raises 404 if no user matches the id
 
 	Returns:
-		_type_: _description_
+		dict: Dictionary of the correspondant user informations
 	"""
 	user = users.get(id)
 	if not user:
@@ -75,14 +75,14 @@ def get_user_by_id(request: Request, id: str):
 @router.patch("/me")
 @auth_guard("user")
 def update_user(request: Request, update_data: UserUpdateProfile = Body(...)):
-	"""_summary_
+	"""Update current user's informations
 
 	Args:
-		request (Request): _description_
-		update_data (UserUpdateProfile, optional): _description_. Defaults to Body(...).
+		request (Request): Request of the endpoint, user's details are attached to it
+		update_data (UserUpdateProfile, optional): Data to be updated. Defaults to Body(...).
 
 	Returns:
-		_type_: _description_
+		status: OK on completion
 	"""
 	user = User.assert_model_id(request.attach_user)
 	users.update(user, update_data)
@@ -92,13 +92,13 @@ def update_user(request: Request, update_data: UserUpdateProfile = Body(...)):
 @router.delete("/me")
 @auth_guard("user")
 def delete_user(request: Request):
-	"""_summary_
+	"""Deletes current user's informations
 
 	Args:
-		request (Request): _description_
+		request (Request): Request of the endpoint, user's details are attached to it
 
 	Returns:
-		_type_: _description_
+		status: Ok on completion
 	"""
 	user = User.assert_model_id(request.attach_user)
 	users.soft_delete(user)
