@@ -178,5 +178,9 @@ Implemented docstring
 * Updated docstring for minor files, utils, config..
 
 ## 0.4.6 (2022-10-14)
-Updated enpoints
+Updated endpoints
 * added docstring to endpoints/user
+
+## 0.4.8 (2022-10-14)
+Updated models
+* added plain models not relying on pydantic
