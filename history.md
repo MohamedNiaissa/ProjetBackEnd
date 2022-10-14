@@ -176,3 +176,7 @@ Implemented docstring
 * Updated docstring for auth and auth_guard
 * Updated docstring for reports
 * Updated docstring for minor files, utils, config..
+
+## 0.4.6 (2022-10-14)
+Updated enpoints
+* added docstring to endpoints/user
