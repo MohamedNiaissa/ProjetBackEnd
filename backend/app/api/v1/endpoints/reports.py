@@ -2,26 +2,28 @@ from typing import Any, List
 
 from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
+
+from mongo.schemas.reports import *
 from mongo.models.reports import Report
 from crud.crud_reports import reports
-from mongo.schemas.reports import ReportCreate, ReportBase
+from mongo.schemas.reports import ReportBase
 
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=ReportBase)
 @auth_guard("admin")
-def get_report(request: Request):
-	"""_summary_
+def get_report(request: Request) -> List:
+	""" Get all the reports from the database
 
 	Args:
-		request (Request): _description_
+		request (Request): request of the endpoint, user admin details are attached to it
 
 	Raises:
-		HTTPException: _description_
+		HTTPException: raise 404 if no reports were found
 
 	Returns:
-		_type_: _description_
+		List: reports documents
 	"""
 	reports_list = reports.get_all()
 	if len(reports_list) is 0:
@@ -32,17 +34,17 @@ def get_report(request: Request):
 	return reports_list
 
 
-@router.post("/")
+@router.post("/", response_model=ReportBase)
 @auth_guard("user")
-def create_report(request: Request, request_create: ReportBase = Body(...)):
-	"""_summary_
+def create_report(request: Request, request_create: ReportBase = Body(...)) -> Any:
+	""" User can submit a report, it can be a post or a comment
 
 	Args:
-		request (Request): _description_
-		request_create (ReportCreate, optional): _description_. Defaults to Body(...).
+		request (Request): request of the endpoint, user details are attached to it
+		request_create (ReportCreate, optional): arguments necessary to create a report . Defaults to Body(...).
 
 	Returns:
-		_type_: _description_
+		Any: default status for code 200
 	"""
 	report_data = Report.assert_model(request_create)
 	reports.create(report_data)
@@ -51,15 +53,15 @@ def create_report(request: Request, request_create: ReportBase = Body(...)):
 
 @router.delete("/{id}")
 @auth_guard("admin")
-def delete_report(request: Request, id: str):
-	"""_summary_
+def delete_report(request: Request, id: str) -> Any:
+	""" Delete a report in the database
 
 	Args:
-		request (Request): _description_
-		id (str): _description_
+		request (Request): request of the endpoint, user amdin details are attached to it
+		id (str): id of the report
 
 	Returns:
-		_type_: _description_
+		Any: default status for code 200
 	"""
 	reports.delete(id)
 	return { "status": "OK" }

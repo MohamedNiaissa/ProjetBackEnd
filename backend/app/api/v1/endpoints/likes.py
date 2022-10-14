@@ -1,16 +1,19 @@
 from typing import Any, List
+from urllib import response
 
 from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
 
+from mongo.schemas.likes import *
 from mongo.schemas.likes import LikeUpdateComment, LikeUpdatePost
 from mongo.models.likes import LikeToCreateComment, LikeToCreatePost
 from crud.crud_likes import likes
+from mongo.schemas.token import StatusOK
 
 router = APIRouter()
 
 
-@router.get("/posts/{id}")
+@router.get("/posts/{id}", response_model=List[LikeUpdatePost])
 def get_likes_by_post_id(id: str):
 	"""Gets like status from a specified post
 
@@ -34,7 +37,7 @@ def get_likes_by_post_id(id: str):
 	return list_likes
 
 
-@router.get("/comments/{id}")
+@router.get("/comments/{id}", response_model=List[LikeUpdateComment])
 def get_likes_by_comment_id(id: str):
 	"""Gets like status from a specified comment
 
@@ -58,7 +61,7 @@ def get_likes_by_comment_id(id: str):
 	return list_likes
 
 
-@router.post("/posts")
+@router.post("/posts", response_model=StatusOK)
 @auth_guard("user")
 def manage_like_on_post(request: Request, likes_state: LikeUpdatePost = Body(...)):
 	"""Changes the status of the like and infos linked to the comment such as the commentID and userID
@@ -83,7 +86,7 @@ def manage_like_on_post(request: Request, likes_state: LikeUpdatePost = Body(...
 		return { "status": "0K" }
 
 
-@router.post("/comments")
+@router.post("/comments", response_model=StatusOK)
 @auth_guard("user")
 def manage_like_on_comment(request: Request, likes_state: LikeUpdateComment = Body(...)):
 	"""Changes the status of the like and infos linked to the comment such as the commentID and userID
