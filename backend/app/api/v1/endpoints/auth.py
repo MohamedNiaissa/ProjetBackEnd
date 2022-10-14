@@ -5,13 +5,9 @@ from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
 from crud.crud_users import users
 from mongo.schemas.users import UserCreate
-from mongo.models.users import User
+from mongo.models.users import User, UserToCreate
 
 from core.config import settings
-
-from utils import (
- 	assert_model
-)
 
 from core.security import (
 	create_access_token,
@@ -30,15 +26,12 @@ async def login(signup_data: UserCreate = Body(...)):
 			detail="Username or email is already used"
 		)
 	
-	user = users.create(UserCreate(
-		email=signup_data.email,
-		username=signup_data.username,
-		password=signup_data.password
-	))
+	new_user = UserToCreate.assert_model(signup_data)
+	user_id = users.create(new_user)
 
 	return {
 		"access_token": create_access_token(
-			user.id,
+			user_id,
 			expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 		),
 		"token_type": "bearer",
@@ -54,7 +47,7 @@ def login(login_data: UserCreate = Body(...)):
 			detail="Email or password is incorrect"
 		)
 
-	user = assert_model(user_mongo)
+	user = User.assert_model_id(user_mongo)
 	if verify_password(login_data.password, user.password) is False:
 		raise HTTPException(
 			status_code=status.HTTP_400_BAD_REQUEST,
@@ -73,7 +66,12 @@ def login(login_data: UserCreate = Body(...)):
 @router.post("/test-token")
 @auth_guard("user")
 def test_token(request: Request) -> Any:
-    """
-    Test access token
-    """
-    return request.attach_user
+	"""_summary_
+
+	Args:
+		request (Request): _description_
+
+	Returns:
+		Any: _description_
+	"""
+	return request.attach_user

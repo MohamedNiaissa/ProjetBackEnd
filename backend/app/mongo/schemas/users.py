@@ -16,9 +16,12 @@ class UserCreate(UserBase):
 
 
 # properties to receive via API on update
-class UserUpdate(UserBase):
+class UserUpdateCredentials(UserBase):
     password: str | None = Field(alias="_id")
 
+
+class UserUpdateProfile(UserBase):
+	profile_picture: Optional[str]
 
 class UserInDBBase(UserBase):
 	id: Optional[str] = Field(alias="_id")

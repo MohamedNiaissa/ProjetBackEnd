@@ -1,86 +1,68 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from pymongo.collection import Collection
 from pymongo.database import Database
+from mongo.schemas.comments import Comment, CommentCreate
 
-from api.v1.endpoints import comments
 from mongo.init_db import get_db
-from core.config import settings
+from bson import ObjectId
 
 class CRUDComments():
-    db_comments: Collection
+	db_comments: Collection
 
-    def __init__(self, db: Database):
-        self.db_comments = db.get_collection("comments")
+	def __init__(self, db: Database):
+		self.db_comments = db.get_collection("comments")
 
+	def get_all(self):
+		"""_summary_
 
-    def get_all(self):
-        """
-        This function fetch all the comments from the collection called comments
+		Returns:
+			_type_: _description_
+		"""
+		return list(self.db_comments.find())
 
-        Returns:
-            JSON: informations of all comments
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+	def create(self, comment_data: Comment) -> str:
+		"""_summary_
 
-    def get_by_id(self, id: str):
-        """
-        This function fetch the comment chosen by its ID from the collection called comments
+		Args:
+			comment_data (Comment): _description_
 
-        Args:
-            id (int): id of the comment
+		Returns:
+			str: _description_
+		"""
 
-        Returns:
-            JSON: all informations of the choosen comment
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+		comment_data.userId = ObjectId(comment_data.userId)
+		comment_data.postId = ObjectId(comment_data.postId)
+		res = self.db_comments.insert_one(comment_data.__dict__)
+		return str(res.inserted_id)
 
-    def create(self, id: str):
-        """
-        Create a comment and insert it on the comments collection
+	def update(self, comment: Comment):
+		"""_summary_
 
-        Returns:
-            JSON: inserted data comment
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+		Args:
+			comment (Comment): _description_
+		"""
+		update_filter = { "_id": ObjectId(comment.id) }
+		new_values = {
+			"$set": { "message": comment.message }
+		}
 
-    def modify(self, id: str):
-        """
-        Modify one or more specific data from a specific comment
-        
-        Args:
-            id (int): id of the comment
+		self.db_comments.update_one(update_filter, new_values)
 
-        Returns:
-            JSON: All the informations of this same comment
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+	def delete(self, id: str):
+		"""_summary_
 
-    def delete(self, id: str):
-        """
-        Delete a specific comment     
+		Args:
+			id (str): _description_
 
-        Args:
-            id (int): id of the comment
-
-        Returns:
-            JSON: All the informations of this same comment
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+		Raises:
+			HTTPException: _description_
+		"""
+		count = self.db_comments.delete_one({"_id": ObjectId(id)})
+		if count.deleted_count is 0:
+			raise HTTPException(
+				status_code=status.HTTP_400_BAD_REQUEST,
+				details="Comment doesn't exist"
+			)
 
 
 comments = CRUDComments(next(get_db()))

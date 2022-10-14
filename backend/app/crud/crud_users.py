@@ -1,17 +1,13 @@
-from fastapi import HTTPException
+import json
+from typing import Any, List
+from fastapi import HTTPException, status
 from pymongo.collection import Collection
 from pymongo.database import Database
 
-from api.v1.endpoints import users
 from mongo.init_db import get_db
-from mongo.schemas.users import UserCreate, UserInDB
-from mongo.models.users import User
+from mongo.schemas.users import UserInDB
+from mongo.models.users import User, UserToCreate
 from bson import ObjectId
-
-from core.security import (
-	get_password_hash
-)
-
 
 class CRUDUsers():
     db_users: Collection
@@ -19,77 +15,44 @@ class CRUDUsers():
     def __init__(self, db: Database):
         self.db_users = db.get_collection("users")
 
-
     def exist(self, email: str) -> UserInDB | None:
-        return self.db_users.find_one({
-            "email": email,
-        })
+        return self.db_users.find_one({"email": email})
 
+    def get(self, id: str) -> User | None:
+        try:
+            user = self.db_users.find_one({"_id": ObjectId(id)})
+            if not user:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="User not found"
+                )
+            return User.assert_model_id(user)
+        except:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="User not found"
+            )
 
-    def get(self, id: str) -> UserInDB | None:
-        return self.db_users.find_one({
-            "_id": ObjectId(id)
-        })
-
-
-    def create(self, user: UserCreate) -> User:
-        """
-        Create a user and insert it on the users collection
-
-        Returns:
-            JSON: inserted infos for the created user
-        """
-        new_user = User(
-            username=user.username,
-            email=user.email,
-            password=get_password_hash(user.password),
-        )
-        new_user.__dict__.pop("id")
-        res = self.db_users.insert_one(new_user.__dict__)
-        new_user.id = res.inserted_id
-        return new_user
-
-
-    def get_all(self):
+    def get_all(self) -> List:
         """
         This function fetch all the users from the collection called users 
 
         Returns:
             JSON: informations of all users
         """
-        try:
-            return {}
-        except HTTPException:
-            pass 
-    
-    def get_by_id(self, id: str):
+        return list(self.db_users.find())
+
+    def create(self, user: UserToCreate) -> str:
         """
-        This function fetch the user chosen by its ID from the collection called users
-        
-        Args:
-            id (number): id of the user
-            
+        Create a user and insert it on the users collection
+
         Returns:
-            JSON: informations of the choosen user
+            JSON: inserted infos for the created user
         """
-        try:
-            return {}
-        except:
-            pass
+        res = self.db_users.insert_one(user.__dict__)
+        return res.inserted_id
 
-    def get_my(self):
-        """
-        This function fetch the current connected user from the collection called users
-        Returns:
-            JSON: informations of my user
-        """
-        try:
-            return {}
-        except:
-            pass
-
-
-    def modify(self, id: str):
+    def update(self, current_user: User, data_update: User):
         """
         Modify one or more specific data from a specific user
 
@@ -99,12 +62,26 @@ class CRUDUsers():
         Returns:
             JSON: All the informations of this same user 
         """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+        json_field = { **data_update.__dict__ }
+        json_field.pop("isAdmin")
+        
+        if "email" in json_field and json_field["email"] is None:
+            json_field.pop("email")
+        
+        if "username" in json_field and json_field["username"] is None:
+            json_field.pop("username")
 
-    def delete(self, id: str):
+        if "profile_picture" in json_field and json_field["profile_picture"] is None:
+            json_field.pop("profile_picture")
+        
+        update_filter = { "_id": ObjectId(current_user.id) }
+        new_values = {
+            "$set": { **json_field }
+        }
+
+        self.db_users.update_one(update_filter, new_values)
+
+    def soft_delete(self, current_user: User) -> None:
         """
         Delete a specific user
 
@@ -114,10 +91,16 @@ class CRUDUsers():
         Returns:
             JSON: All the informations of this same user 
         """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+        update_filter = { "_id": ObjectId(current_user.id) }
+        new_values = {
+            "$set": {
+                "username": "Removed User",
+                "email": None,
+                "password": None,
+            }
+        }
+
+        self.db_users.update_one(update_filter, new_values)
 
 
 users = CRUDUsers(next(get_db()))

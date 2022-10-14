@@ -1,61 +1,64 @@
-from fastapi import HTTPException
+from typing import List
+from xmlrpc.client import Boolean
+from fastapi import HTTPException, status
 from pymongo.collection import Collection
 from pymongo.database import Database
+from mongo.models.reports import Report
 
-from api.v1.endpoints import reports
 from mongo.init_db import get_db
-from core.config import settings
+from bson import ObjectId
 
 class CRUDReports():
-    db_reports: Collection
+	db_reports: Collection
 
-    def __init__(self, db: Database):
-        self.db_reports = db.get_collection("reports")
+	def __init__(self, db: Database):
+		"""_summary_
 
-
-    def get(self, id: str):
-        """
-        Fetch the list of all reports or fetch a report by its ID, if the ID is mentionned
-
-        Args:
-            id (int): id of the report
-
-        Returns:
-            JSON: JSON of the whole list of reports or just a JSON with a specific report
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+		Args:
+			db (Database): _description_
+		"""
+		self.db_reports = db.get_collection("reports")
 
 
-    def create(self):
-        """
-        Create a report and insert the data in the reports collection
+	def get_all(self) -> List:
+		"""_summary_
 
-        Returns:
-            JSON: inserted data report
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+		Returns:
+			List: _description_
+		"""
+		return list(self.db_reports.find())
 
 
-    def delete(self, id: str):
-        """
-        Delete a specific report
+	def create(self, request_data: Report) -> Boolean:
+		"""_summary_
 
-        Args:
-            id (int): id of the report
+		Args:
+			request_data (Report): _description_
 
-        Returns:
-            JSON: all the infos of the report 
-        """
-        try:
-            return {}
-        except HTTPException:
-            pass 
+		Returns:
+			Boolean: _description_
+		"""
+		request_data.userId = ObjectId(request_data.userId)
+		request_data.targetId = ObjectId(request_data.targetId)
+		self.db_reports.insert_one(request_data.__dict__)
+		return True
+
+
+	def delete(self, id: str):
+		"""_summary_
+
+		Args:
+			id (str): _description_
+
+		Raises:
+			HTTPException: _description_
+		"""
+		count = self.db_reports.delete_one({"_id": ObjectId(id)})
+		if count.deleted_count is 0:
+			raise HTTPException(
+				status_code=status.HTTP_400_BAD_REQUEST,
+				details="Report doesn't exist"
+			)
 
 
 reports = CRUDReports(next(get_db()))
