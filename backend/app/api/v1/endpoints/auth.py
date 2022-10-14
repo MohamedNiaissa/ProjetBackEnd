@@ -6,6 +6,7 @@ from api.deps import auth_guard
 from crud.crud_users import users
 from mongo.schemas.users import UserCreate
 from mongo.models.users import User, UserToCreate
+from mongo.schemas.token import Token
 
 from core.config import settings
 
@@ -18,7 +19,18 @@ router = APIRouter()
 
 
 @router.post('/signup')
-async def login(signup_data: UserCreate = Body(...)):
+async def login(signup_data: UserCreate = Body(...)) -> Token:
+	""" Authentification route used for Signup
+
+	Args:
+		signup_data (UserCreate, optional): arguments necessary to create a user. Defaults to Body(...).
+
+	Raises:
+		HTTPException: raise code 400, user already exist
+
+	Returns:
+		Token: jwt token
+	"""
 	exist = users.exist(signup_data.email)
 	if exist:
 		raise HTTPException(
@@ -39,7 +51,19 @@ async def login(signup_data: UserCreate = Body(...)):
 
 
 @router.post('/login')
-def login(login_data: UserCreate = Body(...)): 
+def login(login_data: UserCreate = Body(...)) -> Token:
+	""" Authentification route used for Login
+
+	Args:
+		login_data (UserCreate, optional): arguments necessary to verify a user. Defaults to Body(...).
+
+	Raises:
+		HTTPException: raise code 400, user doesn't exist
+		HTTPException: raise code 400, email or password is incorrect
+
+	Returns:
+		Token: jwt token
+	"""
 	user_mongo = users.exist(login_data.email)
 	if not user_mongo:
 		raise HTTPException(
@@ -66,12 +90,12 @@ def login(login_data: UserCreate = Body(...)):
 @router.post("/test-token")
 @auth_guard("user")
 def test_token(request: Request) -> Any:
-	"""_summary_
+	""" Route used for testing
 
 	Args:
-		request (Request): _description_
+		request (Request): request of the endpoint, user details is attached to it
 
 	Returns:
-		Any: _description_
+		Any: user documents
 	"""
 	return request.attach_user
