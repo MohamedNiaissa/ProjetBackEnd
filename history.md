@@ -158,6 +158,24 @@ Implemented the logic for all routes except posts
 * Updated reports routes, the crud, schemas and models
 * Updated comments routes, the crud, schemas and models
 
+## 0.4.1 (2022-10-14)
+Updated endpoints
+* added response model to endpoints
+
+## 0.4.2 (2022-10-14)
+All the endpoints for post work
+
+## 0.4.4 (2022-10-14)
+Updated utils
+* added docstring to utils
+
+## 0.4.5 (2022-10-14)
+Implemented docstring
+* Updated docstring for comments
+* Updated docstring for auth and auth_guard
+* Updated docstring for reports
+* Updated docstring for minor files, utils, config..
+
 ## 0.4.6 (2022-10-14)
 Updated enpoints
 * added docstring to endpoints/user
