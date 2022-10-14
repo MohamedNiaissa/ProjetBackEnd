@@ -8,6 +8,7 @@ from crud.crud_users import users
 from mongo.models.users import User
 from mongo.schemas.users import UserUpdateProfile
 
+from mongo.models.users import User
 router = APIRouter()
 
 
