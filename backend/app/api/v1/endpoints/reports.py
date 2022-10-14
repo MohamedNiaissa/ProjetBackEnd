@@ -3,11 +3,12 @@ from typing import Any, List
 from fastapi import APIRouter, HTTPException, Request
 from api.deps import auth_guard
 from crud import crud_reports
+from mongo.schemas.reports import *
 
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=ReportBase)
 @auth_guard("admin")
 def get_report(request: Request):
     """
@@ -23,7 +24,7 @@ def get_report(request: Request):
         pass
 
 
-@router.post("/")
+@router.post("/", response_model=ReportBase)
 @auth_guard("user")
 def create_report(request: Request):
     """
@@ -44,5 +45,6 @@ def delete_report(request: Request):
     try:
         # return crud_reports.CRUD_reports.delete(id)
         print(request.attach_user)
+        return {"Status": "200 OK"}
     except HTTPException:
         pass

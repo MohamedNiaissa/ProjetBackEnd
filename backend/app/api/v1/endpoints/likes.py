@@ -3,11 +3,12 @@ from typing import Any, List
 from fastapi import APIRouter, HTTPException, Request
 from api.deps import auth_guard
 from crud import crud_likes
+from mongo.schemas.likes import *
 
 router = APIRouter()
 
 
-@router.get("/posts/{id}")
+@router.get("/posts/{id}", response_model=LikeBase)
 def get_likes_by_post_id():
     """
     Retrieve a specified like.
@@ -19,7 +20,7 @@ def get_likes_by_post_id():
         pass 
 
 
-@router.get("/comments/{id}")
+@router.get("/comments/{id}",response_model=LikeBase)
 def get_likes_by_comment_id():
     """
     Retrieve a like by using a specified comment.
@@ -31,7 +32,7 @@ def get_likes_by_comment_id():
         pass 
 
 
-@router.post("/comments")
+@router.post("/comments", response_model=LikeCreate)
 @auth_guard("user")
 def manage_like_on_comment(request: Request):
     """
@@ -43,7 +44,7 @@ def manage_like_on_comment(request: Request):
         pass 
 
 
-@router.post("/posts")
+@router.post("/posts", response_model=LikeCreate)
 @auth_guard("user")
 def manage_like_on_post(request: Request):
     """

@@ -3,11 +3,12 @@ from typing import Any, List
 from fastapi import APIRouter, HTTPException, Request
 from api.deps import auth_guard
 from crud import crud_users
+from mongo.schemas.users import *
 
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=User)
 @auth_guard("admin")
 def get_users(request: Request):
     """
@@ -20,7 +21,7 @@ def get_users(request: Request):
         pass
 
 
-@router.get("/me")
+@router.get("/me", response_model=User)
 @auth_guard("user")
 def get_my_user(request: Request):
     """
@@ -32,7 +33,7 @@ def get_my_user(request: Request):
         pass
 
 
-@router.get("/{id}")
+@router.get("/{id}", response_model=User)
 @auth_guard("user")
 def get_user_by_id(request: Request):
     """
@@ -45,7 +46,7 @@ def get_user_by_id(request: Request):
         pass
 
 
-@router.post("/")
+@router.post("/", response_model=UserCreate)
 def create_user(request: Request):
     """
     Create a new user.
@@ -56,7 +57,7 @@ def create_user(request: Request):
         pass
 
 
-@router.patch("/{id}")
+@router.patch("/{id}", response_model=UserUpdate)
 @auth_guard("user")
 def modify_user(request: Request):
     """
@@ -78,5 +79,6 @@ def delete_user(request: Request):
     try:
         # crud_users.CRUD_users.delete(id)
         print(request.attach_user)
+        return {"Status": "OK"}
     except HTTPException:
         pass

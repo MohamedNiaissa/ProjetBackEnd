@@ -3,11 +3,12 @@ from typing import Any, List
 from fastapi import APIRouter, HTTPException, Request
 from api.deps import auth_guard
 from crud import crud_comments
+from mongo.schemas.comments import *
 
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=Comment)
 def get_comments():
     """
 	Retrieve comments.
@@ -18,7 +19,7 @@ def get_comments():
         pass
 
 
-@router.post("/")
+@router.post("/", response_model=CommentCreate)
 @auth_guard("user")
 def create_comment(request: Request):
     """
@@ -30,7 +31,7 @@ def create_comment(request: Request):
         pass
 
 
-@router.patch("/{id}")
+@router.patch("/{id}", response_model=CommentUpdate)
 @auth_guard("user")
 def modify_comment(request: Request):
     """
@@ -52,5 +53,6 @@ def delete_comment(request: Request):
     try:
         # return crud_comments.CRUD_comments.delete(id)
         print(request.attach_user)
+        return {"Status": "200 OK"}
     except HTTPException:
         pass
