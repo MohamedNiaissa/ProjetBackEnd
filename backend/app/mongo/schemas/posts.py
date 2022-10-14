@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 class PostBase(BaseModel):
     title: str
     description: str
-    nbLike: int | None
+    #nbLike: int | None
     tag: str | None = None
 
 

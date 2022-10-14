@@ -1,4 +1,5 @@
 from mimetypes import init
+from typing import Dict
 from bson import ObjectId
 from fastapi import HTTPException
 from pymongo.collection import Collection
@@ -7,6 +8,11 @@ from pymongo.database import Database
 from api.v1.endpoints import posts
 from mongo.init_db import get_db
 from core.config import settings
+from pydantic import ValidationError
+
+from fastapi import HTTPException, status
+
+
 
 class CRUDPosts():
     db_posts: Collection
@@ -60,7 +66,7 @@ class CRUDPosts():
             pass 
 
 
-    def modify(self, id: str):
+    def modify(self, id: ObjectId, post_update: Dict):
         """
         Modify one or more specific data from a specific post
         
@@ -71,12 +77,25 @@ class CRUDPosts():
             JSON: All the informations of this same post
         """
         try:
-            return {}
+            objInstance = ObjectId(id)
+            if "title" in post_update:
+                my_post = { "_id": objInstance }
+                new_title = { "$set": { "title": post_update["title"] } }
+                self.db_posts.update_one(my_post, new_title)
+            if "description" in post_update:
+                    my_description = { "_id": objInstance }
+                    new_description = { "$set": { "description": post_update["description"] } }
+                    self.db_posts.update_one(my_description, new_description)
+            else:
+                raise HTTPException(
+			    status_code=status.HTTP_400_BAD_REQUEST,
+		    	detail="ERROR: You have not change anything ")
+                
         except HTTPException:
             pass 
 
 
-    def delete(self, id: str):
+    def delete(self, id: str) -> None:
         """
         Delete a specific post     
 
@@ -88,8 +107,12 @@ class CRUDPosts():
         """
         try:
             objInstance = ObjectId(id)
-            post = self.db_posts.delete_one({"_id": objInstance})
-            return post
+            count = self.db_posts.delete_one({"_id": objInstance})
+            if count.deleted_count == 0:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Post does not exist"
+                )
         except HTTPException:
             pass 
 
