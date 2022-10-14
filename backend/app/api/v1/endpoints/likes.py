@@ -3,6 +3,7 @@ from typing import Any, List
 from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
 
+from mongo.schemas.likes import *
 from mongo.schemas.likes import LikeUpdateComment, LikeUpdatePost
 from mongo.models.likes import LikeToCreateComment, LikeToCreatePost
 from crud.crud_likes import likes
@@ -56,7 +57,7 @@ def get_likes_by_comment_id(id: str):
 	return list_likes
 
 
-@router.post("/posts")
+@router.post("/posts", response_model=LikeCreate)
 @auth_guard("user")
 def manage_like_on_post(request: Request, likes_state: LikeUpdatePost = Body(...)):
 	"""_summary_

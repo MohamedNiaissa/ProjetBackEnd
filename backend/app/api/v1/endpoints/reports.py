@@ -2,6 +2,8 @@ from typing import Any, List
 
 from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
+
+from mongo.schemas.reports import *
 from mongo.models.reports import Report
 from crud.crud_reports import reports
 from mongo.schemas.reports import ReportBase
@@ -9,7 +11,7 @@ from mongo.schemas.reports import ReportBase
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=ReportBase)
 @auth_guard("admin")
 def get_report(request: Request) -> List:
 	""" Get all the reports from the database
@@ -32,7 +34,7 @@ def get_report(request: Request) -> List:
 	return reports_list
 
 
-@router.post("/")
+@router.post("/", response_model=ReportBase)
 @auth_guard("user")
 def create_report(request: Request, request_create: ReportBase = Body(...)) -> Any:
 	""" User can submit a report, it can be a post or a comment
