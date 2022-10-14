@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, Dict, List
 
 from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
@@ -36,7 +36,7 @@ def get_users(request: Request):
 	return users_list
 
 
-@router.get("/me", response_model=User)
+@router.get("/me", response_model=Dict)
 @auth_guard("user")
 def get_my_user(request: Request):
 	"""Gets current logged-in user info from the database

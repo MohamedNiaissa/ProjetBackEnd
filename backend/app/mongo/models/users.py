@@ -33,10 +33,10 @@ class User(BaseModel):
     @classmethod
     def assert_model_id(self, user_data: Dict) -> Self:
         if "_id" in user_data:
-            id = user_data["_id"]
+            id = str(user_data["_id"])
         else:
-            id = user_data["id"]
-
+            id = str(user_data["id"])
+        
         return self(
             id=id,
             username=user_data["username"],
