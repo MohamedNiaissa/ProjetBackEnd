@@ -50,7 +50,7 @@ def get_my_user(request: Request):
 	return request.attach_user
 
 
-@router.get("/{id}", response_model=User)
+@router.get("/{id}")
 def get_user_by_id(request: Request, id: str):
 	"""Gets informations of a specified user
 
