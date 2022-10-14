@@ -187,3 +187,6 @@ Updated enpoints
 ## 0.4.7 (2022-10-14)
 Closed mongo on server close
 
+## 0.4.8 (2022-10-14)
+Updated models
+* added plain models not relying on pydantic

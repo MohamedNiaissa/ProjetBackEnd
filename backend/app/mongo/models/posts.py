@@ -1,6 +1,15 @@
 from pydantic import BaseModel, Field
 
 
+class PostModel:
+    id: str
+    title: str
+    description: str
+    user_id: str
+    tag: str
+    nb_like: int
+
+
 class PostBase(BaseModel):
     id: str = Field(alias="_id")
     title: str
