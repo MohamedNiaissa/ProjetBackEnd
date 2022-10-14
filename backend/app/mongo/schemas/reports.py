@@ -1,12 +1,13 @@
+from typing import Optional
 from pydantic import BaseModel, Field
 
 
 # shared properties of all Reports
 class ReportBase(BaseModel):
-    reason: int
-    user_id: str = Field(alias="userId")
-    post_id: str | None = Field(alias="postId")
-    comment_id: str | None = Field(alias="commentId")
+	reason: int
+	user_id: str
+	target: str
+	target_id: str
 
 
 # properties received by API on creation
@@ -15,7 +16,7 @@ class ReportCreate(BaseModel):
 
 
 # properties received on update
-class ReportUpdate(BaseModel):
+class ReportToUpdate(BaseModel):
     pass
 
 

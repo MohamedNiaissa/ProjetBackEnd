@@ -147,3 +147,13 @@ Implemented the logic for auth signup/login
 * Added some utility function for models
 * Fixed a few properties of users.model
 * Moved get_db because of circular import
+
+## 0.4.0 (2022-10-13)
+Implemented the logic for all routes except posts
+* Fixed object conversion in auth_guard
+* Updated auth routes, and fixed it
+* Added some utility function to help with the testing
+* Updated user routes, the crud, schemas and models
+* Updated likes routes, the crud, schemas and models
+* Updated reports routes, the crud, schemas and models
+* Updated comments routes, the crud, schemas and models
