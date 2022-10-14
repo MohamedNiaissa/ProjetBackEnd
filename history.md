@@ -147,3 +147,7 @@ Implemented the logic for auth signup/login
 * Added some utility function for models
 * Fixed a few properties of users.model
 * Moved get_db because of circular import
+
+## 0.4.1 (2022-10-14)
+Updated endpoints
+* added response model to endpoints
