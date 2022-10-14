@@ -18,13 +18,15 @@ class CRUDComments():
 		"""
 		self.db_comments = db.get_collection("comments")
 
-	def get_all(self) -> List:
+	def get_all(self, id: str) -> List:
 		""" Get all documents in the collection comments
 
 		Returns:
 			List: comments documents
 		"""
-		return list(self.db_comments.find())
+		return list(self.db_comments.find({
+			"postId": ObjectId(id)
+		}))
 
 	def create(self, comment_data: Comment) -> str:
 		""" Create a comment in the database
