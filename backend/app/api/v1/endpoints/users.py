@@ -7,12 +7,13 @@ from mongo.schemas.users import *
 from crud.crud_users import users
 from mongo.models.users import User
 from mongo.schemas.users import UserUpdateProfile
+from mongo.schemas.token import StatusOK
 
 from mongo.models.users import User
 router = APIRouter()
 
 
-@router.get("/", response_model=User)
+@router.get("/", response_model=List[User])
 @auth_guard("admin")
 def get_users(request: Request):
 	"""Gets all users from the database
@@ -49,7 +50,7 @@ def get_my_user(request: Request):
 	return request.attach_user
 
 
-@router.get("/{id}")
+@router.get("/{id}", response_model=User)
 def get_user_by_id(request: Request, id: str):
 	"""Gets informations of a specified user
 
@@ -74,7 +75,7 @@ def get_user_by_id(request: Request, id: str):
 	return user.__dict__
 
 
-@router.patch("/me", response_model=UserUpdate)
+@router.patch("/me", response_model=StatusOK)
 @auth_guard("user")
 def update_user(request: Request, update_data: UserUpdateProfile = Body(...)):
 	"""Update current user's informations
@@ -91,7 +92,7 @@ def update_user(request: Request, update_data: UserUpdateProfile = Body(...)):
 	return { "status": "OK" }
 
 
-@router.delete("/me")
+@router.delete("/me", response_model=StatusOK)
 @auth_guard("user")
 def delete_user(request: Request):
 	"""Deletes current user's informations
