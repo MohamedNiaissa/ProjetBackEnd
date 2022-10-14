@@ -30,7 +30,7 @@ def get_comments() -> List:
 	return comments_list
 
 
-@router.post("/", response_model=CommentCreate)
+@router.post("/")
 @auth_guard("user")
 def create_comment(request: Request, comment_create: CommentCreate = Body(...)) -> Any:
 	""" User can create a comment
