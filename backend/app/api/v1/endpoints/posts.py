@@ -10,6 +10,7 @@ from mongo.schemas.posts import *
 
 router = APIRouter()
 
+
 @router.get("/", response_model=List[PostBase])
 def get_posts(): 
     """
@@ -42,7 +43,7 @@ def get_post_by_id(id):
         pass 
 
 
-@router.post("/", response_model=PostBase)
+@router.post("/", response_model=PostCreate)
 @auth_guard("user")
 def create_post(request: Request, post : PostBase): #marche
     """
@@ -61,7 +62,8 @@ def create_post(request: Request, post : PostBase): #marche
     except HTTPException:
         pass
 
-@router.patch("/{id}")
+
+@router.patch("/{id}",response_model=PostUpdate)
 @auth_guard("user")
 def modify_post(request: Request, id: str, post_update = Body(...)): 
     """   
@@ -79,6 +81,7 @@ def modify_post(request: Request, id: str, post_update = Body(...)):
         return post_update
     except HTTPException:
         pass
+
 
 @router.delete("/{id}")
 @auth_guard("user")
