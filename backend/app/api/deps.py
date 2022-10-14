@@ -4,14 +4,12 @@ from pymongo.database import Database
 from functools import wraps
 from fastapi import Request
 
-from fastapi import Depends, HTTPException, status
+from fastapi import HTTPException, status
 
 from pydantic import ValidationError
 from jose import jwt, JWTError
-from utils import assert_model
 
 from core.config import settings
-from mongo.init_db import get_db
 
 from mongo.models.users import User
 from crud.crud_users import users
@@ -29,7 +27,7 @@ def auth_guard(role: str):
 				)
 			
 			token = auth.replace("Bearer ", "")
-			user = await get_user_from_jwt(next(get_db()), token)
+			user = await get_user_from_jwt(token)
 			if role is "admin" and user.isAdmin is False:
 				raise HTTPException(
 					status_code=status.HTTP_403_FORBIDDEN,
@@ -44,10 +42,7 @@ def auth_guard(role: str):
 	return decorator_auth_guard
 
 
-async def get_user_from_jwt(
-	db: Database = Depends(get_db),
-	token = str,
-) -> User:
+async def get_user_from_jwt(token = str) -> User:
 	try:
 		payload = jwt.decode(
 			token, settings.SECRET_JWT_KEY, algorithms=[settings.ENCODE_ALGORITHM]
@@ -65,4 +60,10 @@ async def get_user_from_jwt(
 			status_code=status.HTTP_404_NOT_FOUND,
 			detail="User not found"
 		)
-	return assert_model(user)
+	elif user.email is None:
+		raise HTTPException(
+			status_code=status.HTTP_404_NOT_FOUND,
+			detail="User not found"
+		)
+
+	return user
