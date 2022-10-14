@@ -160,3 +160,7 @@ Implemented the logic for all routes except posts
 
 ## 0.4.2 (2022-10-14)
 All the endpoints for post work
+
+## 0.4.4 (2022-10-14)
+Updated utils
+* added docstring to utils
