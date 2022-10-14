@@ -11,7 +11,7 @@ from mongo.models.comments import Comment, CommentUpdate
 router = APIRouter()
 
 
-@router.get("/", response_model=Comment)
+@router.get("/")
 def get_comments() -> List:
 	""" Get all the reports from the database
 
