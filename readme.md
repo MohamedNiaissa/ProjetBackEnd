@@ -7,9 +7,9 @@
 ## Installation
 
 Create your own venv and activate it
-run `$ pip install -r requirements.txt`
-run `cd backend`
-run `sh prestart.sh`
+* run `$ pip install -r requirements.txt`
+* run `cd backend`
+* run `sh prestart.sh`
 
 ## Backend.router
 
