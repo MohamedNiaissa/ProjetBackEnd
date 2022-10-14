@@ -11,53 +11,49 @@ from bson import ObjectId
 class CRUDReports():
 	db_reports: Collection
 
-	def __init__(self, db: Database):
-		"""_summary_
+	def __init__(self, db: Database) -> None:
+		""" Init Reports class with the required database collection
 
 		Args:
-			db (Database): _description_
+			db (Database): mongodb database
 		"""
 		self.db_reports = db.get_collection("reports")
 
 
 	def get_all(self) -> List:
-		"""_summary_
+		""" Get all documents in the collection reports
 
 		Returns:
-			List: _description_
+			List: reports documents
 		"""
 		return list(self.db_reports.find())
 
 
-	def create(self, request_data: Report) -> Boolean:
-		"""_summary_
+	def create(self, report_data: Report) -> None:
+		""" Create a report in the database
 
 		Args:
-			request_data (Report): _description_
-
-		Returns:
-			Boolean: _description_
+			report_data (Report): report data
 		"""
-		request_data.userId = ObjectId(request_data.userId)
-		request_data.targetId = ObjectId(request_data.targetId)
-		self.db_reports.insert_one(request_data.__dict__)
-		return True
+		report_data.userId = ObjectId(report_data.userId)
+		report_data.targetId = ObjectId(report_data.targetId)
+		self.db_reports.insert_one(report_data.__dict__)
 
 
 	def delete(self, id: str):
-		"""_summary_
+		""" Delete a report in the database
 
 		Args:
-			id (str): _description_
+			id (str): id of the report
 
 		Raises:
-			HTTPException: _description_
+			HTTPException: raise 400 if report was not found
 		"""
 		count = self.db_reports.delete_one({"_id": ObjectId(id)})
-		if count.deleted_count is 0:
+		if count.deleted_count == 0:
 			raise HTTPException(
 				status_code=status.HTTP_400_BAD_REQUEST,
-				details="Report doesn't exist"
+				detail="Report doesn't exist"
 			)
 
 
