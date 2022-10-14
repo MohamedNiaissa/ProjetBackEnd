@@ -2,6 +2,8 @@ from typing import Any, List
 
 from fastapi import APIRouter, HTTPException, Request, status, Body
 from api.deps import auth_guard
+
+from mongo.schemas.users import *
 from crud.crud_users import users
 from mongo.models.users import User
 from mongo.schemas.users import UserUpdateProfile
@@ -10,7 +12,7 @@ from mongo.models.users import User
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=User)
 @auth_guard("admin")
 def get_users(request: Request):
 	"""_summary_
@@ -33,7 +35,7 @@ def get_users(request: Request):
 	return users_list
 
 
-@router.get("/me")
+@router.get("/me", response_model=User)
 @auth_guard("user")
 def get_my_user(request: Request):
 	"""_summary_
@@ -48,7 +50,6 @@ def get_my_user(request: Request):
 
 
 @router.get("/{id}")
-@auth_guard("user")
 def get_user_by_id(request: Request, id: str):
 	"""_summary_
 
@@ -73,7 +74,7 @@ def get_user_by_id(request: Request, id: str):
 	return user.__dict__
 
 
-@router.patch("/me")
+@router.patch("/me", response_model=UserUpdate)
 @auth_guard("user")
 def update_user(request: Request, update_data: UserUpdateProfile = Body(...)):
 	"""_summary_
