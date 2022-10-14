@@ -19,8 +19,12 @@ wait_seconds = 1
 	after=after_log(logger, logging.WARN),
 )
 def init() -> None:
+	""" Try to create client and db to check if awake
+
+	Raises:
+		e: _description_
+	"""
 	try:
-		# Try to create client and db to check if awake
 		client.server_info()
 	except Exception as e:
 		logger.error(e)

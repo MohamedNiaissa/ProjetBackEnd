@@ -12,14 +12,14 @@ router = APIRouter()
 
 
 @router.get("/", response_model=Comment)
-def get_comments():
-	"""_summary_
+def get_comments() -> List:
+	""" Get all the reports from the database
 
 	Raises:
-		HTTPException: _description_
+		HTTPException: raise 404 if no comments were found
 
 	Returns:
-		_type_: _description_
+		List: comments documents
 	"""
 	comments_list = comments.get_all()
 	if len(comments_list) is 0:
@@ -32,15 +32,15 @@ def get_comments():
 
 @router.post("/", response_model=CommentCreate)
 @auth_guard("user")
-def create_comment(request: Request, comment_create: CommentCreate = Body(...)):
-	"""_summary_
+def create_comment(request: Request, comment_create: CommentCreate = Body(...)) -> Any:
+	""" User can create a comment
 
 	Args:
-		request (Request): _description_
-		comment_create (CommentCreate, optional): _description_. Defaults to Body(...).
+		request (Request): request of the endpoint, user details are attached to it
+		comment_create (CommentCreate, optional): arguments necessary to create a comment . Defaults to Body(...).
 
 	Returns:
-		_type_: _description_
+		Any : default status for code 200, commentId attached to it
 	"""
 	comment_data = Comment.assert_model(request.attach_user["id"], comment_create)
 	id = comments.create(comment_data)
@@ -49,16 +49,16 @@ def create_comment(request: Request, comment_create: CommentCreate = Body(...)):
 
 @router.patch("/{id}", response_model=CommentUpdate)
 @auth_guard("user")
-def update_comment(request: Request, id: str, comment_update: CommentToUpdate = Body(...)):
-	"""_summary_
+def update_comment(request: Request, id: str, comment_update: CommentToUpdate = Body(...)) -> Any:
+	""" Update a comment content in the database
 
 	Args:
-		request (Request): _description_
-		id (str): _description_
-		comment_update (CommentToUpdate, optional): _description_. Defaults to Body(...).
+		request (Request): request of the endpoint, user details are attached to it
+		id (str): id of the comment
+		comment_update (CommentToUpdate, optional): arguments necessary to update a comment . Defaults to Body(...).
 
 	Returns:
-		_type_: _description_
+		Any: default status for code 200
 	"""
 	comment = CommentUpdate.assert_model_id(id, comment_update)
 	comments.update(comment)
@@ -68,13 +68,13 @@ def update_comment(request: Request, id: str, comment_update: CommentToUpdate = 
 @router.delete("/{id}")
 @auth_guard("user")
 def delete_comment(request: Request, id: str):
-	"""_summary_
+	""" Delete a comment in the database
 
 	Args:
-		request (Request): _description_
+		request (Request): request of the endpoint, user details are attached to it
 
 	Returns:
-		_type_: _description_
+		Any: default status for code 200
 	"""
 	comments.delete(id)
 	return { "status": "OK" }
