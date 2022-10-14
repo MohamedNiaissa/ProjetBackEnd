@@ -190,3 +190,6 @@ Closed mongo on server close
 ## 0.4.8 (2022-10-14)
 Updated models
 * added plain models not relying on pydantic
+
+## 0.4.9 (2022-10-14)
+Updated the readme for the endpoints

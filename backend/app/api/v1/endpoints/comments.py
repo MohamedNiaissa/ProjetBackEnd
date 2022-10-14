@@ -11,8 +11,8 @@ from mongo.models.comments import Comment, CommentUpdate
 router = APIRouter()
 
 
-@router.get("/")
-def get_comments() -> List:
+@router.get("/post/{id}", response_model=Comment)
+def get_comments(id: str) -> List:
 	""" Get all the reports from the database
 
 	Raises:
@@ -21,7 +21,7 @@ def get_comments() -> List:
 	Returns:
 		List: comments documents
 	"""
-	comments_list = comments.get_all()
+	comments_list = comments.get_all(id)
 	if len(comments_list) is 0:
 		raise HTTPException(
 			status_code=status.HTTP_404_NOT_FOUND,

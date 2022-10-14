@@ -18,14 +18,16 @@ class CRUDComments():
 		"""
 		self.db_comments = db.get_collection("comments")
 
-	def get_all(self) -> List:
+	def get_all(self, id: str) -> List:
 		""" Get all documents in the collection comments
 
 		Returns:
 			List: comments documents
 		"""
 		list_comments = []
-		mongo_comments = list(self.db_comments.find())
+		mongo_comments = list(self.db_comments.find({
+			"postId": ObjectId(id)
+		}))
 		for el in mongo_comments:
 			el["id"] = str(el["_id"])
 			el["user_id"] = str(el["userId"])
