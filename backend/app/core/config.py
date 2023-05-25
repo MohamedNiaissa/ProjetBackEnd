@@ -11,6 +11,10 @@ class Settings():
 	SECRET_JWT_KEY: str = config["SECRET_JWT_KEY"]
 	ACCESS_TOKEN_EXPIRE_MINUTES: int = int(config["ACCESS_TOKEN_EXPIRE_MINUTES"])
 	ENCODE_ALGORITHM: str = config["ENCODE_ALGORITHM"]
+	TOKEN_INFLUX: str = config["TOKEN_INFLUX"]
+	ORG_INFLUX: str = config["ORG_INFLUX"]
+	URL_INFLUX: str = config["URL_INFLUX"]
+	BUCKET_INFLUX: str = config["BUCKET_INFLUX"]
 
 
 settings = Settings()
